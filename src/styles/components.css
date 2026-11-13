@@ -970,3 +970,36 @@ button.chip:hover {
   min-height: 100vh;
   background: var(--midnight);
 }
+
+/* ---------- Nav over a light hero ---------- */
+.nav--light {
+  color: var(--ink);
+}
+.nav--light .nav__link {
+  color: #3a4560;
+}
+.nav--light .nav__link:hover,
+.nav--light .nav__link.is-active {
+  color: var(--ink);
+}
+.nav--light .nav__link.is-active {
+  background: rgba(17, 24, 43, 0.07);
+}
+.nav--light .btn--primary {
+  background: var(--ink);
+  color: var(--white);
+}
+.nav--light .nav__toggle {
+  border-color: rgba(17, 24, 43, 0.3);
+}
+.nav--light .burger i {
+  background: var(--ink);
+}
+.nav--light .logo__word b {
+  background: linear-gradient(90deg, #0b7f98, #1f56e8);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.nav--light .logo__tile {
+  box-shadow: 0 6px 20px -8px rgba(20, 35, 74, 0.45);
+}

@@ -1,6 +1,6 @@
 # 06 — QA and handover
 
-Status on 2026-11-13: **first complete build of all pages, checked in a browser, not yet a finished launch candidate.** The sections below separate what was actually tested from what was not.
+Status on 2026-11-13: **complete build of all pages with one review-and-polish pass, checked in a browser. Not yet a launch candidate** — see "Not tested" and the owner items below. The sections below separate what was actually tested from what was not.
 
 ## What changed
 The single 27 MB HTML file was rebuilt as a Vite + React + TypeScript project with real routes, a token-based design system, a procedural 3D hero, coded product demos, and per-page metadata. The original file was not modified; it is still at `OneDrive\Desktop\LilyAi-Website\Lily AI Website.html`. A copy with the embedded media stripped is in `reference/original-stripped.html`.
@@ -34,27 +34,27 @@ The single 27 MB HTML file was rebuilt as a Vite + React + TypeScript project wi
 | `npm run build` (TypeScript + Vite) | Passes |
 | `npm run lint` (oxlint) | 0 errors, 6 warnings: 2 in `CoreScene.tsx` (`Math.random` inside `useMemo`, intentional), 4 inside the React Bits components |
 | All 14 routes render, with correct title, H1 and robots tag | Pass (scripted check in the browser) |
-| Horizontal overflow at 375px on all 14 routes | None |
+| Horizontal overflow at 375px (14 routes) and 768px (12 routes) | None |
 | Console errors | None. One deprecation warning (`THREE.Clock`) comes from React Three Fiber |
-| Home page, 1440×900, every section | Inspected by screenshot; issues found were fixed (hero gradient line, core size, capability grid) |
-| Mode A and Mode B, 1440×900 | Inspected by screenshot |
-| Home hero and Mode A hero at 375×812 | Inspected; core placement and scale fixed |
+| Every page inspected by screenshot at 1440px wide | Done for all 13 pages. Issues found were fixed: hero gradient line, core size, capability grid, invisible navigation on the three light-hero pages, oversized About photo, legal page spacing, call-state arrows |
+| Home hero at 375, 768, 1440 and 1920px | Inspected; core placement and scale adjusted for portrait screens |
+| Mode switcher at 768px | Inspected; stacks vertically as designed |
 | Mobile menu | Opens, lists all links, Escape closes it and returns focus to the toggle |
-| Live WebGL core | Seen rendering on the home hero, with waveform, lattice and both signal paths |
+| Keyboard on tabs | Arrow and End keys move focus and selection in the role explorer |
+| Contact form | Empty submit shows three errors and focuses the first field; a malformed email shows a format error; a valid submit shows "Not sent" and makes no network request |
+| Live WebGL core | Seen rendering at 768, 1440 and 1920px with waveform, lattice and both signal paths |
 
 ## Not tested
 - **No Lighthouse or Core Web Vitals measurement.** No performance score is claimed.
-- Product, How It Works, Solutions, Technology, Security, About, Contact, FAQ, Privacy and Terms were confirmed to render but **were not inspected by screenshot**.
-- Tablet (768px) and large desktop (1920px) layouts.
-- A full keyboard-only walkthrough and a screen reader pass.
+- A full keyboard-only walkthrough of every page, and a screen reader pass.
 - Colour contrast was designed to meet 4.5:1 but **not measured** with a tool.
 - `prefers-reduced-motion` and the no-WebGL fallback were implemented but not exercised in a browser.
 - Safari and Firefox. Only the Chromium-based preview was used.
-- Real low-power phones.
+- Real phones and low-power devices.
 
 ## Known limitations and remaining work
 1. **Initial JavaScript is 153 kB gzipped**, larger than ideal. `motion` is only there for one React Bits text effect and could be replaced with CSS.
-2. **Creative-director pass (brief Prompt 9) is only partly done.** Weakest areas still to refine: the interior pages that were not screenshot-reviewed; the copilot demo has empty space on wide screens before the suggestion appears; the call-state chain arrows; the mobile hero is text-heavy with the core partly behind the headline; the final CTA core is dimmed more than it needs to be.
+2. **Creative-director pass (brief Prompt 9) is only partly done.** A polish pass fixed the items found in review and added signal rings to the text-only dark heroes. Still open: the mobile hero is text-heavy with the core partly behind the kicker; text-only heroes (How It Works, Solutions, Technology, About, Contact, FAQ) are simpler than the three pages that carry the 3D core; the copilot demo is static until it scrolls into view.
 3. **Canonical and Open Graph URLs use `https://example.com`** (`SITE_URL` in `src/components/Layout.tsx`). No sitemap was generated. Set the real domain first.
 4. **No Open Graph image.**
 5. **Metadata is set client-side.** Crawlers that do not run JavaScript see only the home page metadata. Pre-rendering would fix this.

@@ -101,10 +101,12 @@ function Nav() {
   }, [menu]);
 
   const productActive = productLinks.some((l) => l.to === pathname);
+  /* Pages with a light hero need dark nav text until the bar turns solid */
+  const onLight = ([routes.security, routes.privacy, routes.terms] as string[]).includes(pathname) && !scrolled && !menu;
 
   return (
     <>
-    <header className={`nav ${scrolled || menu ? 'nav--solid' : ''}`}>
+    <header className={`nav ${scrolled || menu ? 'nav--solid' : ''} ${onLight ? 'nav--light' : ''}`}>
       <nav className="nav__bar wrap" aria-label="Main">
         <Logo />
         <ul className="nav__links">
