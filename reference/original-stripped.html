@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="dark"/>
+<meta name="description" content="Lily AI — Your identical twin on every call. Real-time conversational intelligence that listens, thinks, and briefs you live. Mode A autonomous calling agent and Mode B live copilot."/>
+<meta property="og:title" content="Lily AI — Your identical twin on every call"/>
+<meta property="og:description" content="Listening. Thinking. Briefing you live. Real-time conversational intelligence for every important conversation."/>
+<meta property="og:type" content="website"/>
+<link rel="icon" href="ASSET:asset_01_043a462b.jpg"/>
+<title>Lily AI — Your identical twin on every call</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1D1145;--deep:#0A0618;--deep2:#120A2E;--cyan:#2E7CF6;--cyan2:#A78BFA;--violet:#7C3AED;--grad:linear-gradient(120deg,#8B5CF6,#2E7CF6);--soft:#F4F1FE;--mut:#ABA3C9;--mut2:#8B84AD;--line:rgba(255,255,255,.09);--card:#1A1236;--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--deep);color:#EDF2FF;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:Sora,sans-serif;line-height:1.08;margin:0;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit;min-height:44px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+header{position:fixed;inset:0 0 auto 0;z-index:50;transition:.3s}
+header.scrolled{background:rgba(13,8,32,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;max-width:1280px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;font-family:Sora;font-weight:800;font-size:20px}
+.logo b{color:var(--cyan2)} .wave{display:flex;gap:3px;align-items:center;height:26px}.wave i{display:block;width:4px;border-radius:99px;background:linear-gradient(var(--cyan2),var(--cyan))}
+.wave i:nth-child(1){height:10px}.wave i:nth-child(2){height:20px}.wave i:nth-child(3){height:26px}.wave i:nth-child(4){height:16px}.wave i:nth-child(5){height:9px}
+.links{display:flex;gap:4px;flex-wrap:wrap}.links a{padding:10px 12px;font-size:14px;font-weight:600;color:#D7DEEF;border-radius:99px}.links a:hover,.links a.active{color:#fff;background:rgba(255,255,255,.08)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:99px;font-weight:700;font-size:15px;border:1px solid transparent;cursor:pointer;transition:.2s;min-height:48px}
+.btn-p{background:linear-gradient(135deg,var(--cyan2),var(--cyan));color:#FFFFFF}.btn-p:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(109,88,246,.35)}
+.btn-o{background:rgba(255,255,255,.06);border-color:var(--line);color:#fff}.btn-o:hover{background:rgba(255,255,255,.12)}
+.btn-sm{padding:9px 16px;min-height:40px;font-size:14px}
+#menuBtn{display:none;background:none;border:1px solid var(--line);color:#fff;border-radius:10px;padding:8px 14px;cursor:pointer}
+.page{display:none;padding-top:76px}.page.active{display:block;animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero{position:relative;padding:70px 0 60px;overflow:hidden;background:radial-gradient(900px 500px at 75% 10%,rgba(109,88,246,.16),transparent 60%),radial-gradient(700px 500px at 10% 90%,rgba(43,22,102,.9),transparent),var(--deep)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan2);font-weight:700;border:1px solid rgba(167,139,250,.3);padding:7px 12px;border-radius:99px;background:rgba(109,88,246,.07)}
+.hero h1{font-size:clamp(38px,5.6vw,66px);font-weight:800;margin:20px 0 16px}
+.hero h1 span{color:var(--cyan2)}
+.lead{font-size:clamp(16px,2vw,19px);color:#C3CCE2;max-width:560px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.hero-note{margin-top:16px;font-size:13px;color:var(--mut)}
+#orbWrap{position:relative;width:100%;aspect-ratio:16/9}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:24px;z-index:1;background:transparent}
+.chip{position:absolute;z-index:2;background:rgba(14,26,62,.82);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:13px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.chip b{display:block;font-family:Sora;font-size:13px}.chip span{color:var(--mut)}
+section.band{padding:84px 0}section.alt{background:var(--deep2)}
+.kicker{color:var(--cyan2);font-weight:700;letter-spacing:.13em;text-transform:uppercase;font-size:12px;margin-bottom:12px}
+.h2{font-size:clamp(28px,4vw,44px);font-weight:800;max-width:760px}
+.sub{color:#B9C4DC;max-width:680px;margin-top:14px;font-size:17px}
+.reveal{transition:.7s ease}.reveal.pre{opacity:0;transform:translateY(22px)}.reveal.in{opacity:1;transform:none}
+.orb-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.orb-core{width:230px;height:230px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#6D4DF6,#1D1145 55%,#0A0618);box-shadow:0 0 80px rgba(109,88,246,.45),inset 0 0 60px rgba(167,139,250,.25);position:relative;display:flex;align-items:center;justify-content:center}
+.orb-core:before,.orb-core:after{content:"";position:absolute;border:1px solid rgba(167,139,250,.45);border-radius:50%}
+.orb-core:before{inset:-34px;transform:rotateX(64deg)}.orb-core:after{inset:-62px;border-color:rgba(167,139,250,.22);transform:rotateX(70deg) rotateZ(24deg)}
+.orb-wave{display:flex;gap:5px;align-items:center}.orb-wave i{width:6px;border-radius:99px;background:linear-gradient(var(--cyan2),var(--cyan));animation:eq 1s ease-in-out infinite alternate}
+.problems{margin-top:44px;border-top:1px solid var(--line)}
+.prob{display:grid;grid-template-columns:70px 1fr 1.4fr;gap:18px;padding:26px 6px;border-bottom:1px solid var(--line);align-items:baseline}
+.prob .n{font-family:Sora;color:var(--cyan2);font-weight:800;font-size:22px}.prob h3{font-size:21px}.prob p{color:var(--mut);margin:0}
+.demo{background:linear-gradient(180deg,#221254,#130B30);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4)}
+.demo-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);font-size:13px;color:var(--mut)}
+.dot{width:9px;height:9px;border-radius:50%;background:#2EE6A8;display:inline-block;margin-right:6px}
+.demo-body{padding:20px;display:grid;gap:14px}
+.msg{max-width:88%;padding:12px 15px;border-radius:14px;font-size:14.5px}
+.msg.other{background:rgba(255,255,255,.07)}.msg.lily{background:rgba(109,88,246,.13);border:1px solid rgba(109,88,246,.25);margin-left:auto}.msg small{display:block;color:var(--cyan2);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.suggest{background:#fff;color:#221452;border-radius:14px;padding:14px 16px;font-size:14.5px}.suggest small{display:block;color:#6D28D9;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px}
+.mode{border-radius:22px;padding:28px;border:1px solid var(--line);position:relative;overflow:hidden}
+.mode-a{background:linear-gradient(160deg,#2B1666,#0C0724)}.mode-b{background:#F4F1FE;color:#1D1145}
+.mode-b p,.mode-b li{color:#4A4470}.mode h3{font-size:26px;margin:8px 0 10px}.mode ul{padding-left:18px;color:#C9D3EC}
+.tag{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:99px;display:inline-block}
+.tag-a{background:rgba(109,88,246,.15);color:var(--cyan2)}.tag-b{background:#E7E0FF;color:#6D28D9}.tag-beta{background:#FFF3D6;color:#7A5200}
+.bars{display:flex;gap:3px;align-items:center;height:44px;margin:16px 0}.bars i{flex:1;background:linear-gradient(var(--cyan2),var(--cyan));border-radius:99px;animation:eq 1s ease-in-out infinite alternate}
+@keyframes eq{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:44px;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.step{padding:24px 18px;background:var(--card);border-right:1px solid var(--line)}.step:last-child{border-right:0}.step .n{font-family:Sora;font-weight:800;color:var(--cyan2);font-size:26px}.step h3{font-size:17px;margin:8px 0 6px}.step p{font-size:14px;color:var(--mut);margin:0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 18px}.tab{padding:10px 16px;border-radius:99px;border:1px solid var(--line);background:transparent;color:#DCE4F5;cursor:pointer;font-weight:600;min-height:44px}.tab.on{background:var(--cyan);color:#FFFFFF;border-color:var(--cyan)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}.card h3{font-size:18px;margin-bottom:8px}.card p{color:var(--mut);font-size:15px;margin:0}
+.card .ic{font-size:22px;margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+.flow{display:flex;gap:8px;align-items:stretch;margin-top:36px;flex-wrap:wrap}
+.flow .f{flex:1;min-width:140px;background:var(--card);border:1px solid rgba(109,88,246,.25);border-radius:16px;padding:18px;text-align:center;font-family:Sora;font-weight:700;font-size:15px}
+.flow .arr{align-self:center;color:var(--cyan2);font-size:20px}
+.rel{margin-top:14px;background:rgba(109,88,246,.06);border:1px dashed rgba(109,88,246,.35);border-radius:16px;padding:16px 20px;font-size:14.5px;color:#C9DFF5}
+.final{background:radial-gradient(700px 380px at 50% 0%,rgba(109,88,246,.18),transparent),var(--navy);text-align:center;padding:90px 0}
+.final h2{font-size:clamp(30px,4.5vw,50px)}
+footer{background:#05030F;padding:56px 0 30px;border-top:1px solid var(--line)}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:28px}.fgrid h4{font-size:14px;margin-bottom:12px}.fgrid a{display:block;color:var(--mut);font-size:14px;padding:5px 0}.fgrid a:hover{color:#fff}
+.copy{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);color:var(--mut2);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pagehero{padding:56px 0 10px}.pagehero h1{font-size:clamp(32px,5vw,54px);max-width:820px}
+.faq{border:1px solid var(--line);border-radius:16px;margin-bottom:12px;background:var(--card);overflow:hidden}
+.faq button{width:100%;text-align:left;background:none;border:0;color:#fff;padding:18px 20px;font-family:Sora;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:12px}
+.faq .ans{display:none;padding:0 20px 18px;color:#C3CCE2;font-size:15px}.faq.open .ans{display:block}
+label{font-weight:600;font-size:14px;display:block;margin:14px 0 6px}
+input,select,textarea{width:100%;background:#130B30;border:1px solid var(--line);border-radius:12px;color:#fff;padding:12px 14px}
+.notice{background:#FFF8E1;color:#5C4300;border-radius:14px;padding:16px 18px;font-size:14.5px}
+.statebtns{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.pill{font-size:12px;font-weight:700;padding:6px 11px;border-radius:99px;background:rgba(255,255,255,.08);color:#C9D3EC}
+.pill.hot{background:var(--cyan);color:#FFFFFF}
+.legal p,.legal li{color:#C3CCE2}.legal h2{font-size:24px;margin:28px 0 10px}
+@media(max-width:900px){.hero-grid,.two,.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.step{border-right:0;border-bottom:1px solid var(--line)}.fgrid{grid-template-columns:1fr 1fr}.links{display:none;position:absolute;top:64px;left:12px;right:12px;background:#130B30;border:1px solid var(--line);border-radius:16px;padding:12px;flex-direction:column}.links.open{display:flex}#menuBtn{display:block}#navCta{display:none}#orbWrap{width:100%;aspect-ratio:16/9;height:auto}.prob{grid-template-columns:44px 1fr}.prob p{grid-column:2}}
+@media(max-width:560px){.grid3{grid-template-columns:1fr}}
+/* === 2026 retheme: logo gradient + cinematic motion === */
+.logo-mark{width:42px;height:42px;border-radius:12px;background:#fff;object-fit:cover;object-position:top;box-shadow:0 6px 18px rgba(124,58,237,.4);flex:none}
+.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo-tile{display:inline-block;background:#fff;border-radius:18px;padding:10px;line-height:0;box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.logo-tile img{border-radius:10px;display:block}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:60;box-shadow:0 0 12px rgba(139,92,246,.7)}
+.btn-p{background:var(--grad);position:relative;overflow:hidden}
+.btn-p:hover{box-shadow:0 14px 34px rgba(124,58,237,.45)}
+.btn-p:after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);transition:left .6s ease}
+.btn-p:hover:after{left:130%}
+.hero{background:var(--deep)}
+.hero:before{content:"";position:absolute;inset:-22% -12%;background:radial-gradient(640px 420px at 78% 8%,rgba(139,92,246,.34),transparent 62%),radial-gradient(560px 420px at 88% 88%,rgba(46,124,246,.26),transparent 62%),radial-gradient(520px 380px at 6% 92%,rgba(124,58,237,.22),transparent 60%);animation:drift 16s ease-in-out infinite alternate;pointer-events:none}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.05) 50%,transparent 58%);background-size:280% 100%;animation:sweep 9s ease-in-out infinite;pointer-events:none}
+.hero .wrap{position:relative;z-index:2}
+@keyframes drift{from{transform:translate3d(-2%,-1%,0) scale(1)}to{transform:translate3d(2.5%,2%,0) scale(1.07)}}
+@keyframes sweep{0%,55%{background-position:130% 0}90%,100%{background-position:-40% 0}}
+.hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.chip{animation:floaty 5.5s ease-in-out infinite}
+.chip:nth-of-type(2){animation-delay:-1.8s}.chip:nth-of-type(3){animation-delay:-3.4s}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.dot{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(46,230,168,.5)}50%{box-shadow:0 0 0 6px rgba(46,230,168,0)}}
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);overflow:hidden;padding:15px 0}
+.ticker-in{display:flex;gap:0;width:max-content;animation:tick 30s linear infinite;font-family:Sora;font-weight:700;font-size:14px;letter-spacing:.06em;color:#CFC6F2;white-space:nowrap}
+.ticker-in span{padding:0 18px}.ticker-in i{color:var(--cyan2);font-style:normal}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.demo-prog{height:3px;background:rgba(255,255,255,.08)}
+.demo-prog i{display:block;height:100%;width:0;background:var(--grad)}
+.demo-prog.run i{transition:width 3.4s linear;width:100%}
+.msg.pop,.suggest.pop{animation:pop .5s ease}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.mode{transition:transform .35s ease,box-shadow .35s ease}
+.mode:hover{transform:translateY(-5px);box-shadow:0 26px 50px rgba(0,0,0,.35)}
+.card{transition:transform .3s ease,border-color .3s ease}
+.card:hover{transform:translateY(-4px);border-color:rgba(167,139,250,.45)}
+.flow .f{background:linear-gradient(180deg,rgba(139,92,246,.14),rgba(46,124,246,.08));border-color:rgba(167,139,250,.35)}
+.final{background:radial-gradient(760px 420px at 50% -10%,rgba(139,92,246,.32),transparent 65%),radial-gradient(600px 380px at 85% 110%,rgba(46,124,246,.22),transparent 60%),var(--navy)}
+.pagehero h1{background:linear-gradient(100deg,#fff 30%,#C9B8FF 75%,#8FC2FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kicker{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tab.on{background:var(--grad)}
+.pill.hot{background:var(--grad)}
+.tag-a{background:rgba(139,92,246,.18)}
+.reveal{transition:opacity .8s cubic-bezier(.22,.8,.3,1),transform .8s cubic-bezier(.22,.8,.3,1)}
+.reveal.pre{transform:translateY(30px)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+/* === 2026 polish: frosted glass + video frames === */
+section.band{padding:96px 0}
+header.scrolled{background:linear-gradient(180deg,rgba(26,15,60,.84),rgba(13,8,32,.78));backdrop-filter:blur(18px) saturate(1.35);-webkit-backdrop-filter:blur(18px) saturate(1.35);border-bottom:1px solid rgba(167,139,250,.22);box-shadow:0 12px 34px rgba(4,2,14,.45)}
+.demo{background:linear-gradient(180deg,rgba(64,36,132,.5),rgba(19,11,48,.78));backdrop-filter:blur(14px) saturate(1.25);-webkit-backdrop-filter:blur(14px) saturate(1.25);border:1px solid rgba(167,139,250,.32);border-radius:24px;box-shadow:0 34px 80px rgba(2,0,12,.55),0 0 0 1px rgba(255,255,255,.04) inset,0 0 44px rgba(124,58,237,.16)}
+.demo-head{background:rgba(255,255,255,.03)}
+.card{background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(139,92,246,.07));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 42px rgba(2,0,12,.3)}
+.card:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 24px 48px rgba(2,0,12,.4),0 10px 36px rgba(124,58,237,.2)}
+.panel{background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(139,92,246,.06));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 22px 50px rgba(2,0,12,.32)}
+.mode{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(167,139,250,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 22px 52px rgba(2,0,12,.35)}
+.mode-a{background:linear-gradient(160deg,rgba(64,32,140,.72),rgba(12,7,36,.9))}
+.mode-b{background:linear-gradient(160deg,rgba(255,255,255,.94),rgba(231,224,255,.9))}
+.mode:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 30px 60px rgba(2,0,12,.45),0 10px 38px rgba(124,58,237,.2)}
+.step{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(139,92,246,.05))}
+.flow .f{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 32px rgba(2,0,12,.28)}
+.faq{background:linear-gradient(165deg,rgba(255,255,255,.05),rgba(139,92,246,.05));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-color:rgba(255,255,255,.12)}
+.chip{background:rgba(16,9,40,.68);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border:1px solid rgba(167,139,250,.35);box-shadow:0 18px 40px rgba(2,0,12,.45),0 0 22px rgba(124,58,237,.14)}
+.notice{box-shadow:0 16px 36px rgba(2,0,12,.25)}
+.vid-frame{position:relative;aspect-ratio:16/9;background:#0A0618;overflow:hidden;border-bottom:1px solid rgba(167,139,250,.25);box-shadow:inset 0 0 0 1px rgba(167,139,250,.12),inset 0 0 70px rgba(124,58,237,.1)}
+.vid-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:#0A0618}
+/* === Film showcase (home): both mode films side by side === */
+.film-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:38px}
+.film-card{margin:0;background:linear-gradient(180deg,rgba(64,36,132,.5),rgba(19,11,48,.78));backdrop-filter:blur(14px) saturate(1.25);-webkit-backdrop-filter:blur(14px) saturate(1.25);border:1px solid rgba(167,139,250,.32);border-radius:24px;overflow:hidden;box-shadow:0 34px 80px rgba(2,0,12,.55),0 0 0 1px rgba(255,255,255,.04) inset,0 0 44px rgba(124,58,237,.16)}
+.film-badge{position:absolute;top:14px;left:14px;z-index:2;background:rgba(16,9,40,.74);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(167,139,250,.45);color:#fff;font-size:12px;font-weight:600;letter-spacing:.05em;padding:6px 12px;border-radius:999px}
+.film-cap{padding:20px 22px 22px}
+.film-cap h3{margin:0 0 6px;font-size:20px}
+.film-cap p{color:var(--mut);margin:0 0 14px;font-size:15px;line-height:1.55}
+video.lazyvid{cursor:pointer}
+@media(max-width:900px){.film-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.links.open{background:rgba(19,11,48,.92);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border-color:rgba(167,139,250,.3);box-shadow:0 24px 50px rgba(2,0,12,.5)}}
+/* === Full-bleed video hero === */
+.hero{min-height:calc(100svh - 76px);display:flex;flex-direction:column;justify-content:center;padding:118px 0 92px}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;background-color:var(--deep)}
+.hero-bg .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;border-radius:0;background:transparent}
+.hero-bg .orb-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-right:9%}
+.hero-scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,rgba(10,6,24,.93) 0%,rgba(17,10,44,.82) 40%,rgba(26,15,64,.46) 68%,rgba(10,6,24,.16) 100%),linear-gradient(32deg,rgba(10,6,24,.5) 0%,rgba(10,6,24,.14) 32%,rgba(10,6,24,0) 50%)}
+.hero:before,.hero:after{z-index:1}
+.hero-content{position:relative;z-index:2;width:100%}
+.hero-text{max-width:660px}
+.hero .lead{color:#DFE6FA;text-shadow:0 2px 16px rgba(5,2,16,.6)}
+.hero-note{color:#C9D2EC;text-shadow:0 1px 10px rgba(5,2,16,.6)}
+.hero-chips{position:absolute;inset:0;z-index:3;pointer-events:none}
+.hero-chips .chip{pointer-events:auto;background:rgba(22,13,52,.52);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid rgba(167,139,250,.42);box-shadow:0 18px 42px rgba(2,0,12,.45),0 0 24px rgba(124,58,237,.16)}
+.chip-1{top:116px;right:5%}
+.chip-2{top:47%;right:3.5%}
+.chip-3{bottom:10%;right:15%}
+@media(max-width:900px){.hero{min-height:0;padding:104px 0 60px}.hero-bg .orb-fallback{justify-content:center;padding-right:0}.hero-scrim{background:linear-gradient(180deg,rgba(10,6,24,.78) 0%,rgba(13,8,32,.55) 52%,rgba(10,6,24,.3) 82%,rgba(10,6,24,.12) 100%),linear-gradient(100deg,rgba(10,6,24,.85) 0%,rgba(17,10,44,.55) 60%,rgba(10,6,24,.2) 100%)}.hero-chips{position:relative;inset:auto;display:flex;flex-wrap:wrap;gap:10px;width:100%;max-width:1180px;margin:0 auto;padding:28px 22px 0}.hero-chips .chip{position:relative;top:auto;right:auto;bottom:auto;left:auto}}
+/* === Photos + interactive sections === */
+.photo-card{position:relative;border-radius:22px;overflow:hidden;border:1px solid rgba(167,139,250,.32);box-shadow:0 26px 56px rgba(2,0,12,.45),0 0 30px rgba(124,58,237,.12);background:#0A0618;min-height:300px}
+.photo-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s cubic-bezier(.22,.8,.3,1)}
+.photo-card:hover img,.photo-card:focus-within img{transform:scale(1.055)}
+.photo-cap{position:absolute;left:0;right:0;bottom:0;padding:56px 20px 16px;background:linear-gradient(180deg,transparent,rgba(38,16,84,.45) 42%,rgba(14,6,36,.92));color:#fff;pointer-events:none}
+.photo-cap b{font-family:Sora;font-size:17px;display:block}
+.photo-cap p{margin:4px 0 0;font-size:13.5px;color:#D9D2F5;opacity:0;transform:translateY(8px);transition:.45s ease}
+.photo-card:hover .photo-cap p,.photo-card:focus-within .photo-cap p{opacity:1;transform:none}
+@media(hover:none){.photo-cap p{opacity:1;transform:none}}
+.explorer{border-radius:22px;overflow:hidden;background:linear-gradient(180deg,rgba(64,36,132,.45),rgba(19,11,48,.82));backdrop-filter:blur(14px) saturate(1.25);-webkit-backdrop-filter:blur(14px) saturate(1.25);border:1px solid rgba(167,139,250,.32);box-shadow:0 30px 70px rgba(2,0,12,.5),0 0 40px rgba(124,58,237,.13)}
+.exp-tabs{padding:16px 16px 2px;margin:0}
+.exp-stage{display:grid;grid-template-columns:1.1fr .9fr;transition:opacity .22s ease,transform .22s ease}
+.exp-stage.fading{opacity:0;transform:translateY(8px)}
+.exp-photo{position:relative;min-height:360px;overflow:hidden}
+.exp-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s cubic-bezier(.22,.8,.3,1)}
+.explorer:hover .exp-photo img{transform:scale(1.04)}
+.exp-shade{position:absolute;inset:0;background:linear-gradient(200deg,transparent 52%,rgba(30,12,66,.5));pointer-events:none}
+.exp-body{padding:28px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.exp-body h3{font-size:25px}
+.exp-body p{color:#C3CCE2;margin:0;font-size:15.5px}
+.mode-rec .lbl{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:7px}
+.exp-note{font-size:12px!important;color:var(--mut2)!important}
+.explorer.compact .exp-photo{min-height:248px}
+.explorer.compact .exp-body{padding:22px}
+.explorer.compact .exp-body h3{font-size:21px}
+.compare{margin-top:22px;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,rgba(64,36,132,.5),rgba(19,11,48,.8));backdrop-filter:blur(14px) saturate(1.25);-webkit-backdrop-filter:blur(14px) saturate(1.25);border:1px solid rgba(167,139,250,.32);box-shadow:0 30px 70px rgba(2,0,12,.5),0 0 40px rgba(124,58,237,.14)}
+.cmp-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.03)}
+.cmp-switch{display:inline-flex;gap:4px;background:rgba(10,6,24,.55);border:1px solid var(--line);border-radius:99px;padding:4px;flex-wrap:wrap}
+.cmp-btn{border:0;background:transparent;color:#C9D3EC;padding:9px 16px;border-radius:99px;font-weight:700;font-size:14px;cursor:pointer;min-height:40px;transition:.25s}
+.cmp-btn.on{background:var(--grad);color:#fff;box-shadow:0 8px 20px rgba(124,58,237,.35)}
+.cmp-note{font-size:13.5px;color:var(--mut)}
+.cmp-view{padding:20px;animation:fade .35s ease}
+.cmp-view[hidden]{display:none}
+.tgl-row{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 0;border-bottom:1px solid var(--line)}
+.tgl-row b{font-family:Sora;font-size:16px}
+.tgl-row span{display:block;color:var(--mut);font-size:14px;margin-top:2px}
+.switch{position:relative;width:58px;height:32px;flex:none;display:inline-block}
+.switch input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;z-index:2}
+.switch .track{position:absolute;inset:0;background:rgba(255,255,255,.14);border:1px solid var(--line);border-radius:99px;transition:.25s}
+.switch .track:after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.25s;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.switch input:checked~.track{background:var(--grad);border-color:transparent}
+.switch input:checked~.track:after{transform:translateX(26px)}
+.switch input:focus-visible~.track{outline:2px solid var(--cyan2);outline-offset:3px}
+.shaped{font-size:13.5px;color:var(--mut);margin-top:12px}
+.shaped b{color:var(--cyan2)}
+.about-photo{display:grid;grid-template-columns:.8fr 1.2fr;gap:18px;margin-bottom:18px}
+@media(max-width:900px){.exp-stage{grid-template-columns:1fr}.exp-photo{min-height:240px}.about-photo{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+<header id="hdr"><nav class="nav" aria-label="Main">
+<a class="logo" href="#home" data-nav="home"><img class="logo-mark" src="ASSET:asset_01_043a462b.jpg" alt="Lily AI logo"/><span>Lily&nbsp;<b>AI</b></span></a>
+<div class="links" id="navLinks">
+<a href="#product" data-nav="product">Product</a><a href="#how" data-nav="how">How It Works</a><a href="#solutions" data-nav="solutions">Solutions</a><a href="#technology" data-nav="technology">Platform</a><a href="#security" data-nav="security">Security</a><a href="#about" data-nav="about">About</a><a href="#faq" data-nav="faq">FAQs</a><a href="#contact" data-nav="contact">Contact</a>
+</div>
+<div style="display:flex;gap:10px;align-items:center"><a class="btn btn-p btn-sm" id="navCta" href="#product" data-nav="product">Explore Lily AI</a><button id="menuBtn" aria-label="Open menu" aria-expanded="false">Menu</button></div>
+</nav></header>
+
+<main>
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+<div class="hero"><div class="wrap hero-content">
+<div class="hero-text">
+<span class="eyebrow">● Real-time conversational intelligence</span>
+<h1>Your identical twin <span>on every call.</span></h1>
+<p class="lead">Meet Lily AI — real-time conversational intelligence that listens, understands context, and helps you make every conversation count.</p>
+<p style="font-family:Sora;font-weight:700;color:#fff;margin-top:14px">Listening. Thinking. Briefing you live.</p>
+<div class="cta-row"><a class="btn btn-p" href="#product" data-nav="product">Explore Lily AI</a><a class="btn btn-o" href="#how" data-nav="how">Discover how it works →</a></div>
+<p class="hero-note">Two modes, one intelligence: an autonomous calling agent that speaks for you in-app, and a live copilot that only you can see. Mode A is currently in Beta — see the honest status notes throughout this site.</p>
+</div>
+</div><div class="hero-bg"><div class="orb-fallback" aria-hidden="true"><div class="orb-core"><div class="orb-wave"><i style="height:22px"></i><i style="height:44px"></i><i style="height:64px"></i><i style="height:38px"></i><i style="height:54px"></i><i style="height:28px"></i><i style="height:46px"></i></div></div></div><video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" poster="ASSET:asset_02_f946acf3.jpg" aria-label="Sound-wave orb film representing Lily AI listening in real time"><source src="ASSET:asset_03_3ca1a3f6.mp4" type="video/mp4"></video><div class="hero-scrim" aria-hidden="true"></div>
+</div><div class="hero-chips"><div class="chip chip-1"><b>Listening</b><span>Live transcript running</span></div>
+<div class="chip chip-2"><b>Briefing you live</b><span>Private suggestion ready</span></div>
+<div class="chip chip-3"><b>English + Hindi / Hinglish</b><span>Designed bilingual support</span></div>
+</div>
+</div>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-in" id="tickerIn"></div></div>
+
+<section class="band" style="padding-top:64px"><div class="wrap reveal">
+<p class="kicker">Watch Lily AI</p><h2 class="h2">See Lily in action.</h2>
+<p class="sub">Two short films — one for each mode. Watch Lily assist a live call privately from behind the scenes, then watch her speak on a call herself. Tap any film to pause or play it.</p>
+<div class="film-grid">
+<figure class="film-card"><div class="vid-frame"><span class="film-badge">Mode B · Live Copilot</span><video class="lazyvid" muted loop playsinline preload="metadata" poster="ASSET:asset_04_37b9c813.jpg" aria-label="Film: a professional on a video call while Lily's private copilot panel assists only her"><source src="ASSET:asset_05_b1f721c1.mp4" type="video/mp4"></video></div><figcaption class="film-cap"><h3>The copilot only you can see</h3><p>On a live video call, Lily's private panel listens, reads the moment and prepares a suggestion — visible to no one but you.</p><a class="btn btn-o btn-sm" href="#modeb" data-nav="modeb">Explore Live Copilot →</a></figcaption></figure>
+<figure class="film-card"><div class="vid-frame"><span class="film-badge">Mode A · Autonomous Agent · Beta</span><video class="lazyvid" muted loop playsinline preload="metadata" poster="ASSET:asset_06_71a8f081.jpg" aria-label="Film: Lily's glass call panel with the sound-wave orb while the owner listens in on the call"><source src="ASSET:asset_07_f1d00387.mp4" type="video/mp4"></video></div><figcaption class="film-cap"><h3>The agent that speaks for you</h3><p>Lily joins an in-app call, announces itself as AI, and speaks from your playbook — while you listen in, ready to whisper guidance or take over.</p><a class="btn btn-o btn-sm" href="#modea" data-nav="modea">Explore Autonomous Calling →</a></figcaption></figure>
+</div></div></section>
+
+<section class="band"><div class="wrap reveal">
+<p class="kicker">The problem</p><h2 class="h2">Every call leaves value on the table.</h2>
+<p class="sub">Important conversations move fast. The details, the tone, the follow-up — too much depends on memory in the moment.</p>
+<div class="problems">
+<div class="prob"><span class="n">01</span><h3>No memory under pressure</h3><p>Names, numbers and commitments blur together when you're thinking about what to say next.</p></div>
+<div class="prob"><span class="n">02</span><h3>No real-time support</h3><p>Today, help arrives after the call — in notes and summaries — when the moment to use it has already passed.</p></div>
+<div class="prob"><span class="n">03</span><h3>Inconsistent execution</h3><p>Your best phrasing and positioning don't show up on every call, especially on the hard ones.</p></div>
+<div class="prob"><span class="n">04</span><h3>Manual follow-up</h3><p>Summaries, action items and follow-up messages get written by hand, late — or not at all.</p></div>
+</div></div></section>
+
+<section class="band alt"><div class="wrap reveal">
+<p class="kicker">Meet Lily AI</p><h2 class="h2">Meet the intelligence behind every conversation.</h2>
+<p class="sub">Lily listens, understands context, assists in the moment, and captures what matters. Press play to watch a copilot moment unfold.</p>
+<div class="demo" style="margin-top:34px"><div class="demo-head"><span><span class="dot"></span>Live Copilot — private to you only</span><button class="btn btn-p btn-sm" id="playDemo">▶ Play demo</button></div><div class="vid-frame"><video class="lazyvid" muted loop playsinline preload="metadata" poster="ASSET:asset_04_37b9c813.jpg" aria-label="Film: a professional on a video call while Lily's private copilot panel assists only her"><source src="ASSET:asset_05_b1f721c1.mp4" type="video/mp4"></video></div><div class="demo-prog" id="demoProg"><i></i></div>
+<div class="demo-body" id="demoBody">
+<div class="msg other"><small>Client</small>We like the proposal, but the timeline feels tight for our team.</div>
+<div class="msg other" data-step style="display:none"><small>Client</small>Could you hold the current pricing if we sign this month?</div>
+<div class="suggest" data-step style="display:none"><small>Lily suggests — only you see this</small>Acknowledge the timeline concern first, offer a phased start, then confirm the pricing point from your playbook before agreeing to anything.</div>
+<div class="msg" data-step style="display:none;background:rgba(46,230,168,.1)"><small style="color:#2EE6A8">Captured for your summary</small>Client concern: timeline. Open point: pricing hold for signing this month. Follow-up draft will be prepared after the call.</div>
+</div></div></div></section>
+
+<section class="band"><div class="wrap reveal">
+<p class="kicker">Two intelligent modes</p><h2 class="h2">Two ways to make every conversation smarter.</h2>
+<div class="two">
+<div class="mode mode-a"><span class="tag tag-a">Mode A</span> <span class="tag tag-beta">Beta</span><h3>Autonomous Calling Agent</h3><p style="color:#C9D3EC">Lily joins a live in-app call and <strong>speaks as an AI agent</strong> — announcing itself as AI first, following your playbook, and handling interruptions while you listen, whisper guidance, take over, or end the session.</p><div class="bars" aria-hidden="true"><i style="height:40%"></i><i style="height:80%"></i><i style="height:55%"></i><i style="height:95%"></i><i style="height:65%"></i><i style="height:85%"></i><i style="height:45%"></i><i style="height:70%"></i><i style="height:90%"></i><i style="height:50%"></i></div><ul><li>Listening · Thinking · Speaking · Interrupted states</li><li>Owner whisper, takeover &amp; end controls</li><li>Guests join by room code or browser link</li></ul><a class="btn btn-p" href="#modea" data-nav="modea" style="margin-top:10px">Explore Autonomous Calling</a></div>
+<div class="mode mode-b"><span class="tag tag-b">Mode B</span><h3>Live Copilot</h3><p>Lily <strong>never speaks to the other party</strong>. Only you see the live transcript, sentiment and tone cues, private suggested replies, and relevant knowledge — then a summary, action items and a follow-up draft when the call ends.</p><ul><li>Live transcription &amp; private suggestions</li><li>Sentiment and tone indicators</li><li>Summary, actions &amp; follow-up draft</li></ul><a class="btn" href="#modeb" data-nav="modeb" style="margin-top:10px;background:#1D1145;color:#fff">Explore Live Copilot</a></div>
+</div>
+<div class="compare">
+<div class="cmp-head"><div class="cmp-switch" role="group" aria-label="Compare Mode A and Mode B"><button class="cmp-btn on" data-cmp="a">Mode A — Agent speaks</button><button class="cmp-btn" data-cmp="b">Mode B — Copilot whispers</button></div><span class="cmp-note" id="cmpNote">Lily speaks to the other participant — you supervise, whisper, or take over.</span></div>
+<div class="cmp-view" id="cmpA">
+<div class="msg lily" style="max-width:100%"><small>Lily AI · speaking in the call</small>Hello, I'm Lily, an AI assistant calling on behalf of my owner. Shall we start with the timeline you mentioned?</div>
+<div class="bars" aria-hidden="true"><i style="height:45%"></i><i style="height:85%"></i><i style="height:60%"></i><i style="height:100%"></i><i style="height:55%"></i><i style="height:90%"></i><i style="height:40%"></i><i style="height:75%"></i><i style="height:65%"></i><i style="height:50%"></i></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="pill hot">Speaking</span><span class="pill">Listening</span><span class="pill">Thinking</span><span class="pill">Interrupted</span><span style="flex:1"></span><span class="pill">Whisper guidance</span><span class="pill">Take over</span><span class="pill">End session</span></div>
+</div>
+<div class="cmp-view" id="cmpB" hidden>
+<div class="msg other" style="max-width:100%"><small>Client · live transcript</small>The numbers look reasonable. My concern is support after we sign.</div>
+<div class="suggest" style="margin-top:12px"><small>Lily suggests — only you see this</small>Offer the onboarding outline from your playbook, name the support path clearly, and ask what response time they expect — before discussing terms.</div>
+<p style="margin:14px 0 0"><span class="pill hot">Sentiment: Engaged</span> <span class="pill">Tone: Cautious</span> <span class="pill">Private to you only</span></p>
+</div>
+</div>
+</div></section>
+
+<section class="band alt"><div class="wrap reveal">
+<p class="kicker">How it works</p><h2 class="h2">From live conversation to intelligent action.</h2>
+<div class="steps">
+<div class="step"><span class="n">01</span><h3>Connect</h3><p>Connect through supported conversation experiences — in-app calling or your phone's microphone in person.</p></div>
+<div class="step"><span class="n">02</span><h3>Listen</h3><p>Conversation audio is captured and understood securely, the moment it is spoken.</p></div>
+<div class="step"><span class="n">03</span><h3>Understand</h3><p>Context, your playbook and relevant knowledge shape what Lily understands.</p></div>
+<div class="step"><span class="n">04</span><h3>Assist</h3><p>Spoken responses in Mode A, or private suggestions in Mode B.</p></div>
+<div class="step"><span class="n">05</span><h3>Capture</h3><p>Summaries, action items and follow-up drafts — ready when you hang up.</p></div>
+</div></div></section>
+
+<section class="band"><div class="wrap reveal">
+<p class="kicker">Capabilities</p><h2 class="h2">Everything a live conversation needs.</h2>
+<div class="tabs" id="capTabs" role="tablist"></div>
+<div class="panel" id="capPanel"></div>
+</div></section>
+
+<section class="band alt"><div class="wrap reveal">
+<p class="kicker">The differentiator</p><h2 class="h2">Trained on you, not just data.</h2>
+<p class="sub">Generic AI note-takers summarize what happened. Lily AI is designed to use your communication preferences, playbooks, and conversation history to provide more relevant assistance.</p>
+<div class="tabs" id="diffTabs"></div><div class="panel" id="diffPanel"></div>
+</div></section>
+
+<section class="band"><div class="wrap reveal">
+<p class="kicker">Use cases</p><h2 class="h2">Wherever business happens on a call.</h2>
+<div id="homeExplorer"></div>
+<p style="margin-top:20px"><a class="btn btn-o" href="#solutions" data-nav="solutions">See all solutions →</a></p>
+</div></section>
+
+<section class="band alt"><div class="wrap reveal">
+<p class="kicker">The platform</p><h2 class="h2">Engineered for real-time conversations.</h2>
+<p class="sub">A private voice platform built for one job — live conversation — with no outside AI company ever receiving your calls.</p>
+<div class="flow"><div class="f">Conversation Audio</div><span class="arr">→</span><div class="f">Speech Recognition</div><span class="arr">→</span><div class="f">Conversation Engine</div><span class="arr">→</span><div class="f">Context &amp; Reasoning</div><span class="arr">→</span><div class="f">Spoken Reply — or Private Assistance</div><span class="arr">→</span><div class="f">Conversation Output</div></div>
+<div class="rel"><strong>Reliability layer underneath:</strong> step-by-step conversation control (idle → ringing → listening → thinking → speaking → interrupted → ended), every reply tracked individually, instant interruption handling, and outdated audio always discarded — so an interrupted reply never talks over the caller.</div>
+<p style="margin-top:20px"><a class="btn btn-o" href="#technology" data-nav="technology">Explore the platform →</a></p>
+</div></section>
+
+<section class="band"><div class="wrap reveal">
+<p class="kicker">Privacy &amp; security</p><h2 class="h2">Your conversations deserve responsible intelligence.</h2>
+<div class="grid3">
+<div class="card"><h3>Consent first</h3><p>Explicit consent in every flow, per-region retention (30 days EU, 90 days elsewhere), and guests consent before joining.</p></div>
+<div class="card"><h3>Your data, your controls</h3><p>Export your workspace data in a portable file, delete a workspace, or delete your account from inside the app.</p></div>
+<div class="card"><h3>Private by design</h3><p>Every conversation is processed on Lily's own private platform. No outside AI company receives your audio or transcripts.</p></div>
+</div>
+<p style="margin-top:20px"><a class="btn btn-p" href="#security" data-nav="security">Explore Privacy and Security</a></p>
+</div></section>
+
+<div class="final"><div class="wrap reveal"><h2>Make every conversation count.</h2><p class="sub" style="margin:14px auto 24px">Meet the next generation of real-time conversational intelligence.</p><a class="btn btn-p" href="#product" data-nav="product">Discover Lily AI</a></div></div>
+</div>
+<!-- ============ PRODUCT ============ -->
+<div class="page" id="page-product"><div class="wrap">
+<div class="pagehero"><p class="kicker">Product</p><h1>One intelligence. Two ways to work a conversation.</h1><p class="sub">Lily AI is a real-time conversational intelligence platform: an elegant app connected to Lily's own private platform, where listening, understanding and voice come together in the moment.</p></div>
+<section class="band" style="padding-top:30px"><div class="grid2">
+<div class="card"><span class="tag tag-a">Mode A · Beta</span><h3 style="margin-top:12px">Autonomous Calling Agent</h3><p>Lily speaks in a live in-app call, announces itself as AI, follows your playbook, and stays under your control — whisper, take over, or end at any time.</p><p style="margin-top:14px"><a class="btn btn-p btn-sm" href="#modea" data-nav="modea">Explore Mode A</a></p></div>
+<div class="card"><span class="tag tag-b">Mode B</span><h3 style="margin-top:12px">Live Copilot</h3><p>Lily stays silent to everyone but you: live transcript, tone cues, private suggested replies, and a complete post-call brief.</p><p style="margin-top:14px"><a class="btn btn-o btn-sm" href="#modeb" data-nav="modeb">Explore Mode B</a></p></div>
+</div>
+<h2 class="h2" style="margin-top:56px;font-size:32px">Conversation intelligence, before, during and after</h2>
+<div class="grid3">
+<div class="card"><h3>Before</h3><p>Your tone profile, approved phrases, playbooks, client notes and knowledge base are loaded as context — your way of working, ready before the call starts.</p></div>
+<div class="card"><h3>During</h3><p>Live transcription, contextual understanding and assistance in the moment — spoken in Mode A, whispered privately to you in Mode B.</p></div>
+<div class="card"><h3>After</h3><p>A structured summary, action items and a follow-up draft, with the conversation saved to your searchable history.</p></div>
+</div>
+<h2 class="h2" style="margin-top:56px;font-size:32px">Trained on you, not just data.</h2>
+<p class="sub">Generic assistants answer from general knowledge. Lily's suggestions are shaped by three things you control. Try switching each one on and off, and watch the reply Lily would prepare for you change.</p>
+<div class="panel" style="margin-top:26px">
+<p style="margin:0;color:#C3CCE2">The client asks: <strong style="color:#fff">“Can you do better on price?”</strong></p>
+<div class="tgl-row"><div><b>Learns your voice</b><span>Adapts phrasing and tone to the communication preferences in your profile.</span></div><label class="switch"><input type="checkbox" id="tglVoice" checked><span class="track"></span></label></div>
+<div class="tgl-row"><div><b>Learns your playbook</b><span>Uses your approved phrases, positioning and instructions.</span></div><label class="switch"><input type="checkbox" id="tglPlay" checked><span class="track"></span></label></div>
+<div class="tgl-row" style="border-bottom:0"><div><b>Learns your history</b><span>Brings in relevant context from your previous conversations.</span></div><label class="switch"><input type="checkbox" id="tglHist"><span class="track"></span></label></div>
+<div class="suggest" style="margin-top:20px"><small>Lily suggests — only you see this</small><span id="pgReply"></span></div>
+<p class="shaped" id="pgShaped"></p>
+</div>
+<div class="notice" style="margin-top:30px"><strong>Honest status:</strong> Mode A's in-app voice agent is in Beta — it is built, but it has not yet been verified live with a real caller. Calling regular phone numbers requires a separate telephone carrier arrangement, and is not live. Lily does not capture ordinary mobile call audio — no phone app can.</div>
+</section></div></div>
+
+<!-- ============ MODE A ============ -->
+<div class="page" id="page-modea"><div class="wrap">
+<div class="pagehero"><p class="kicker">Mode A · Beta</p><h1>The autonomous calling agent that speaks — as you.</h1><p class="sub">Lily participates in a live in-app conversation and speaks as an AI agent, following your playbook while you stay in control.</p></div>
+<section class="band" style="padding-top:26px">
+<div class="demo"><div class="demo-head"><span><span class="dot"></span>In-app call · Room guest joined via browser link</span><span class="pill" id="fsmPill">State: Listening</span></div>
+<div class="vid-frame"><video class="lazyvid" muted loop playsinline preload="metadata" poster="ASSET:asset_06_71a8f081.jpg" aria-label="Film: Lily's glass call panel with the sound-wave orb while the owner listens in on the call"><source src="ASSET:asset_07_f1d00387.mp4" type="video/mp4"></video></div>
+<div class="demo-body">
+<div class="msg lily"><small>Lily AI · announces itself first</small>Hello, I'm Lily, an AI assistant calling on behalf of my owner. Is now a good time for a brief conversation?</div>
+<div class="msg other"><small>Participant</small>Yes — but I only have a few minutes, and I wanted to ask about pricing first.</div>
+<div class="statebtns"><button class="btn btn-o btn-sm" data-state="Listening">Listening</button><button class="btn btn-o btn-sm" data-state="Thinking">Thinking</button><button class="btn btn-o btn-sm" data-state="Speaking">Speaking</button><button class="btn btn-o btn-sm" data-state="Interrupted">Interrupted — barge-in</button></div>
+<p style="color:var(--mut);font-size:14.5px;margin:0" id="fsmText">Lily is listening. When the participant speaks over a reply, the current speech is cut, that reply is discarded, and its audio is never played.</p>
+<div class="bars" aria-hidden="true"><i style="height:50%"></i><i style="height:90%"></i><i style="height:60%"></i><i style="height:100%"></i><i style="height:55%"></i><i style="height:80%"></i><i style="height:40%"></i><i style="height:75%"></i></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><span class="pill hot">Whisper guidance to Lily</span><span class="pill">Take over the call</span><span class="pill">End session</span></div>
+</div></div>
+<div class="grid3">
+<div class="card"><h3>Playbook-led</h3><p>Follows your instructions, approved phrases and client context — relevant knowledge is recalled at every turn, keeping answers grounded in your material.</p></div>
+<div class="card"><h3>Interruptible by design</h3><p>Every reply is tracked individually, so an interrupted answer stops cleanly and its audio is discarded — Lily never talks over the other person.</p></div>
+<div class="card"><h3>You stay the owner</h3><p>Listen live, send private whisper instructions Lily can act on, take over speaking yourself, or end and revoke the session instantly.</p></div>
+</div>
+<p class="sub" style="margin-top:26px">Joining is in-app only: participants enter with a room code in the Lily app or through a browser guest link, where they see a consent notice before joining. Mode A voice in live calls remains Beta until it has been verified live with real callers.</p>
+</section></div></div>
+
+<!-- ============ MODE B ============ -->
+<div class="page" id="page-modeb"><div class="wrap">
+<div class="pagehero"><p class="kicker">Mode B</p><h1>The live copilot only you can see.</h1><p class="sub">Lily silently assists during your conversation. It never speaks to the other participant — every transcript line, cue and suggestion is private to you.</p></div>
+<section class="band" style="padding-top:26px">
+<div class="demo"><div class="demo-head"><span><span class="dot"></span>Live Copilot · your call, your screen only</span><span class="pill hot">Sentiment: Engaged · Tone: Cautious</span></div>
+<div class="vid-frame"><video class="lazyvid" muted loop playsinline preload="metadata" poster="ASSET:asset_04_37b9c813.jpg" aria-label="Film: a professional on a video call while Lily's private copilot panel assists only her"><source src="ASSET:asset_05_b1f721c1.mp4" type="video/mp4"></video></div>
+<div class="demo-body">
+<div class="msg other"><small>Other party</small>The numbers look reasonable. My concern is support after we sign.</div>
+<div class="suggest"><small>Lily suggests</small>Offer the onboarding outline from your playbook, name the support path clearly, and ask what response time they expect — before discussing terms.</div>
+<div class="msg" style="background:rgba(255,255,255,.05)"><small style="color:#9AA6C2">Relevant knowledge retrieved</small>Your knowledge base: support and onboarding notes for this client, plus your last conversation's open points.</div>
+</div></div>
+<div class="grid3">
+<div class="card"><h3>Live transcription</h3><p>What's being said, as it's said — in English or Hindi/Hinglish conversation.</p></div>
+<div class="card"><h3>Private suggested replies</h3><p>Contextual suggestions shaped by your tone profile, playbook and retrieved knowledge.</p></div>
+<div class="card"><h3>Post-call brief</h3><p>Summary, action items and a follow-up draft generated when the conversation ends.</p></div>
+</div></section></div></div>
+
+<!-- ============ HOW ============ -->
+<div class="page" id="page-how"><div class="wrap">
+<div class="pagehero"><p class="kicker">How it works</p><h1>From live conversation to intelligent action.</h1><p class="sub">Five stages connect your call to Lily's intelligence and back — in real time.</p></div>
+<section class="band" style="padding-top:26px"><div class="steps" style="grid-template-columns:1fr;margin-top:0">
+<div class="step"><span class="n">01 — Connect</span><p style="margin-top:8px">Open a copilot session, or start an in-app Mode A call. Guests join Mode A by room code or browser guest link after a consent notice. Regular cellular calls are not captured — Lily works through the app and your phone's microphone.</p></div>
+<div class="step"><span class="n">02 — Listen</span><p style="margin-top:8px">Your voice travels over an encrypted connection to Lily's private platform, where speech is transcribed as you talk (English and Hindi/Hinglish).</p></div>
+<div class="step"><span class="n">03 — Understand</span><p style="margin-top:8px">Lily follows the flow of the conversation while your profile, playbook, client notes and knowledge are brought together as context for every reply.</p></div>
+<div class="step"><span class="n">04 — Assist</span><p style="margin-top:8px">Mode A: the reply is spoken aloud in the call. Mode B: the assistance stays on your screen as private text. An interruption stops the reply in progress, in both modes.</p></div>
+<div class="step"><span class="n">05 — Capture</span><p style="margin-top:8px">The conversation is stored in your history with a summary, action items and a follow-up draft — exportable, and deletable by you.</p></div>
+</div></section></div></div>
+
+<!-- ============ SOLUTIONS ============ -->
+<div class="page" id="page-solutions"><div class="wrap">
+<div class="pagehero"><p class="kicker">Solutions</p><h1>Wherever business happens on a call.</h1><p class="sub">No case studies, no invented customers — just the conversations Lily is designed for.</p></div>
+<section class="band" style="padding-top:26px">
+<div id="solExplorer" style="margin-bottom:44px"></div>
+<h2 style="font-size:26px">For individuals</h2><div class="grid3" id="solInd"></div>
+<h2 style="font-size:26px;margin-top:44px">For teams &amp; enterprises</h2><div class="grid3" id="solTeam"></div>
+</section></div></div>
+
+<!-- ============ TECHNOLOGY ============ -->
+<div class="page" id="page-technology"><div class="wrap">
+<div class="pagehero"><p class="kicker">How Lily works</p><h1>Engineered for real-time conversations.</h1><p class="sub">One private platform, designed end to end for live conversation — fast, careful, and always under your control.</p></div>
+<section class="band" style="padding-top:26px">
+<div class="flow"><div class="f">Your Voice<br><small style="color:var(--mut);font-weight:400">In-app call or microphone</small></div><span class="arr">→</span><div class="f">Listening<br><small style="color:var(--mut);font-weight:400">Speech understood as you talk</small></div><span class="arr">→</span><div class="f">Conversation Engine<br><small style="color:var(--mut);font-weight:400">Follows every turn, precisely</small></div><span class="arr">→</span><div class="f">Understanding<br><small style="color:var(--mut);font-weight:400">Reasoning with your context</small></div><span class="arr">→</span><div class="f">The Reply<br><small style="color:var(--mut);font-weight:400">Spoken aloud — or private text</small></div></div>
+<div class="grid3">
+<div class="card"><h3>Guided conversation flow</h3><p>Every call moves through clear stages — idle → ringing → listening → thinking → speaking → interrupted → ended. Each reply is tracked individually, so an interrupted reply is discarded and its audio never plays late.</p></div>
+<div class="card"><h3>Knowledge, recalled in the moment</h3><p>Your knowledge base, client notes and conversation history are kept together securely and searched live, turn by turn — so the most relevant detail is always within reach.</p></div>
+<div class="card"><h3>Interruptions, handled gracefully</h3><p>The moment someone starts speaking, the reply in progress stops. No talking over anyone, no awkward overlap — the foundation of a natural conversation.</p></div>
+<div class="card"><h3>Nothing leaves the family</h3><p>Listening, understanding and voice all run on Lily's own private platform. Your audio and transcripts are never sent to an outside AI company.</p></div>
+<div class="card"><h3>Honest scope</h3><p>Processing on the phone itself is not available yet. Calling regular phone numbers needs a separate carrier arrangement. Hindi voice quality has not been verified live — we say so plainly rather than promise it.</p></div>
+<div class="card"><h3>Get the app</h3><p>No app-store listing exists yet. Early access to the app is arranged directly with the Lily AI team — <a href="#contact" data-nav="contact" style="color:var(--cyan2);font-weight:700">get in touch →</a></p></div>
+</div></section></div></div>
+
+<!-- ============ SECURITY ============ -->
+<div class="page" id="page-security"><div class="wrap">
+<div class="pagehero"><p class="kicker">Security &amp; privacy</p><h1>Your conversations deserve responsible intelligence.</h1><p class="sub">Designed controls, stated plainly — with no certifications or audits claimed that haven't happened.</p></div>
+<section class="band" style="padding-top:26px"><div class="grid3">
+<div class="card"><h3>Consent everywhere</h3><p>Explicit consent in the app, an AI announcement at the start of Mode A calls, and a consent notice guests must accept before joining.</p></div>
+<div class="card"><h3>Retention by region</h3><p>Conversation data is retained 30 days for EU workspaces and 90 days elsewhere, per the product's consent design.</p></div>
+<div class="card"><h3>Export &amp; deletion</h3><p>Export workspace data to a portable file on your phone. Workspace owners can delete a workspace; account deletion is available once you no longer own one.</p></div>
+<div class="card"><h3>Encrypted by default</h3><p>Every connection is encrypted, and unencrypted connections are refused. Passwords and sign-in credentials are stored in protected, unreadable form.</p></div>
+<div class="card"><h3>Private keys stay private</h3><p>Sensitive access credentials live only on Lily's secure platform — never in the app, and never on this website.</p></div>
+<div class="card"><h3>Read the documents</h3><p><a href="#privacy" data-nav="privacy" style="color:var(--cyan2);font-weight:700">Privacy Policy →</a><br><a href="#terms" data-nav="terms" style="color:var(--cyan2);font-weight:700">Terms &amp; Conditions →</a></p></div>
+</div></section></div></div>
+
+<!-- ============ ABOUT ============ -->
+<div class="page" id="page-about"><div class="wrap">
+<div class="pagehero"><p class="kicker">About</p><h1>Conversations are where work actually happens.</h1><p class="sub">Lily AI exists because the most important moments in business — the negotiation, the interview, the difficult client call — happen live, spoken, and unscripted.</p></div>
+<section class="band" style="padding-top:26px"><div class="about-photo"><div class="photo-card" style="min-height:360px"><img src="ASSET:asset_08_bbed8861.jpg" alt="A small team meeting around a table beside bright windows" loading="lazy" decoding="async"><div class="photo-cap"><b>Designed for live conversation</b><p>Boardrooms, interview tables, support floors — where important conversations actually happen. Illustrative photo.</p></div></div>
+<div class="card" style="display:flex;flex-direction:column;justify-content:center"><h3>The room is where Lily works</h3><p>Lily is built for the live, spoken, unscripted moment — not the write-up afterwards. Every design choice starts from the conversation itself: listen first, understand in context, assist in the moment, and capture what matters before it fades.</p><p style="margin-top:10px">That is why the copilot stays private, why the agent announces itself, and why unfinished capabilities carry honest labels on this site.</p></div></div>
+<div class="grid2">
+<div class="card"><h3>Vision</h3><p>A world where no one walks into an important conversation alone — where preparation, memory and your best phrasing are present in the moment, not reconstructed afterwards.</p></div>
+<div class="card"><h3>Mission</h3><p>Build real-time conversational intelligence that is personal (it works the way you work), private (private by design, consent-led), and honest about what it can and cannot do.</p></div>
+<div class="card"><h3>Philosophy</h3><p>The AI announces itself. The copilot never speaks for you without you. Interruptions are respected, not talked over. And unfinished capabilities are labelled as such — Mode A carries its Beta label on this site because that is the truth of its verification status.</p></div>
+<div class="card"><h3>Where it's heading</h3><p>Live verification of the Mode A voice agent, telephony through a carrier trunk when credentials are in place, and deeper personalization — each shipped only when it has actually been tested.</p></div>
+</div></section></div></div>
+
+<!-- ============ CONTACT ============ -->
+<div class="page" id="page-contact"><div class="wrap">
+<div class="pagehero"><p class="kicker">Contact</p><h1>Talk to us about Lily AI.</h1></div>
+<section class="band" style="padding-top:20px"><div style="max-width:640px">
+<div class="notice"><strong>Please note:</strong> this form is not yet connected to a mail service, so submitting it does not send anything yet. The fields below show exactly what we'll ask for when the inbox opens — nothing you type here is transmitted or stored.</div>
+<form id="contactForm"><label for="cf-name">Name</label><input id="cf-name" autocomplete="name" placeholder="Your name">
+<label for="cf-email">Work email</label><input id="cf-email" type="email" autocomplete="email" placeholder="you@company.com">
+<label for="cf-co">Company</label><input id="cf-co" placeholder="Company or independent">
+<label for="cf-type">Inquiry type</label><select id="cf-type"><option>Product question</option><option>Mode A — Autonomous Calling</option><option>Mode B — Live Copilot</option><option>Getting set up</option><option>Privacy &amp; security</option><option>Other</option></select>
+<label for="cf-msg">Message</label><textarea id="cf-msg" rows="5" placeholder="How can we help?"></textarea>
+<p style="margin-top:18px"><button class="btn btn-p" type="submit">Submit inquiry</button></p>
+<p id="formMsg" style="color:var(--cyan2);font-weight:600"></p></form>
+</div></section></div></div>
+
+<!-- ============ FAQ ============ -->
+<div class="page" id="page-faq"><div class="wrap">
+<div class="pagehero"><p class="kicker">FAQs</p><h1>Questions, answered honestly.</h1></div>
+<section class="band" style="padding-top:20px" id="faqList"></section></div></div>
+
+<!-- ============ PRIVACY ============ -->
+<div class="page legal" id="page-privacy"><div class="wrap">
+<div class="pagehero"><p class="kicker">Legal</p><h1>Privacy Policy</h1><p class="sub">The product's plain-language privacy policy, as it appears in the Lily AI app. A lawyer review is still needed before commercial launch.</p></div>
+<section class="band" style="padding-top:16px">
+<h2>What Lily processes</h2><p>Lily processes the conversation audio, transcripts, summaries and account information needed to provide live copilot and calling features, on the private Lily platform your workspace uses. No outside AI company receives your audio or transcripts.</p>
+<h2>Consent &amp; retention</h2><p>Features run only with explicit consent. Conversation data is retained for 30 days (EU) or 90 days (other regions) under the product's per-region consent design, and guests joining a call see a consent notice first.</p>
+<h2>Your controls</h2><ul><li>Export your workspace data to a portable file on your phone.</li><li>Delete a workspace you own, which removes its data.</li><li>Delete your account (available when you no longer own a workspace).</li></ul>
+<h2>Security</h2><p>All communication uses encrypted connections. Passwords and sign-in credentials are stored in protected, unreadable form. Keep your device and account credentials secure.</p>
+</section></div></div>
+
+<!-- ============ TERMS ============ -->
+<div class="page legal" id="page-terms"><div class="wrap">
+<div class="pagehero"><p class="kicker">Legal</p><h1>Terms &amp; Conditions</h1><p class="sub">The product's plain-language terms, as presented in the Lily AI app. A lawyer review is still needed before commercial launch.</p></div>
+<section class="band" style="padding-top:16px">
+<h2>Using Lily AI</h2><p>You are responsible for using Lily lawfully and for obtaining any consent your region requires before involving others in an AI-assisted conversation. In Mode A, Lily announces that it is an AI at the start of a call.</p>
+<h2>Current limitations</h2><ul><li>Mode A voice calling is in Beta and is provided for in-app conversations.</li><li>Lily does not provide access to ordinary mobile call audio, and calling regular phone numbers requires a separate carrier arrangement.</li><li>AI suggestions and summaries can be wrong — review them before acting.</li></ul>
+<h2>Your content</h2><p>Your playbooks, knowledge and conversation history remain yours. You can export or delete them using the in-app controls described in the Privacy Policy.</p>
+</section></div></div>
+</main>
+
+<footer><div class="wrap"><div class="fgrid">
+<div><a class="logo-tile" href="#home" data-nav="home"><img src="ASSET:asset_09_090143df.jpg" alt="Lily AI — Your Call Assistant" width="168" height="168"/></a><p style="color:var(--mut);font-size:14px;max-width:280px;margin-top:14px">Your identical twin on every call. Listening. Thinking. Briefing you live.</p></div>
+<div><h4>Product</h4><a href="#product" data-nav="product">Product overview</a><a href="#modea" data-nav="modea">Mode A — Autonomous Calling</a><a href="#modeb" data-nav="modeb">Mode B — Live Copilot</a><a href="#how" data-nav="how">How It Works</a></div>
+<div><h4>Company</h4><a href="#solutions" data-nav="solutions">Solutions</a><a href="#technology" data-nav="technology">Platform</a><a href="#about" data-nav="about">About</a><a href="#faq" data-nav="faq">FAQs</a><a href="#contact" data-nav="contact">Contact</a></div>
+<div><h4>Legal</h4><a href="#security" data-nav="security">Security &amp; Privacy</a><a href="#privacy" data-nav="privacy">Privacy Policy</a><a href="#terms" data-nav="terms">Terms &amp; Conditions</a></div>
+</div><div class="copy"><span>© 2026 Lily AI. Real-time conversational intelligence.</span><span>Private by design · English + Hindi/Hinglish · Mode A in Beta</span><span>Photography: Pexels</span></div></div></footer>
+
+<script>
+var pages=['home','product','modea','modeb','how','solutions','technology','security','about','contact','faq','privacy','terms'];
+function showPage(id){if(pages.indexOf(id)<0)id='home';pages.forEach(function(p){document.getElementById('page-'+p).classList.toggle('active',p===id)});document.querySelectorAll('[data-nav]').forEach(function(a){a.classList.toggle('active',a.getAttribute('data-nav')===id)});document.getElementById('navLinks').classList.remove('open');window.scrollTo(0,0)}
+function route(){var h=(location.hash||'#home').slice(1);showPage(h)}
+document.addEventListener('click',function(e){var a=e.target.closest('[data-nav]');if(a){e.preventDefault();var t=a.getAttribute('data-nav');history.pushState(null,'','#'+t);showPage(t)}});
+window.addEventListener('hashchange',route);
+document.getElementById('menuBtn').addEventListener('click',function(){var l=document.getElementById('navLinks');l.classList.toggle('open');this.setAttribute('aria-expanded',l.classList.contains('open'))});
+window.addEventListener('scroll',function(){document.getElementById('hdr').classList.toggle('scrolled',window.scrollY>30);var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;document.getElementById('progress').style.width=(max>0?(window.scrollY/max)*100:0)+'%'},{passive:true});
+
+/* Capability ticker */
+(function(){var items=['Live transcription','Private suggestions','Autonomous calling','Sentiment & tone cues','Playbook-led replies','Automatic summaries','Action items','Follow-up drafts','English + Hindi / Hinglish','Consent first, always'];var html=items.map(function(t){return '<span>'+t+'</span><i>✦</i>'}).join('');document.getElementById('tickerIn').innerHTML=html+html})();
+document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('pre')});var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');en.target.classList.remove('pre')}})},{threshold:.02});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});setTimeout(function(){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');el.classList.remove('pre')})},1600);
+
+/* Demo player — auto-plays like a film when it scrolls into view */
+var demoPlayed=false;
+function playDemo(){var btn=document.getElementById('playDemo');var steps=document.querySelectorAll('#demoBody [data-step]');var prog=document.getElementById('demoProg');steps.forEach(function(s){s.style.display='none';s.classList.remove('pop')});prog.classList.remove('run');void prog.offsetWidth;btn.disabled=true;btn.textContent='Playing…';prog.classList.add('run');steps.forEach(function(s,i){setTimeout(function(){s.style.display='block';s.classList.add('pop');if(i===steps.length-1){btn.textContent='↻ Replay demo';btn.disabled=false}},1100*(i+1))})}
+document.getElementById('playDemo').addEventListener('click',playDemo);
+var demoIO=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting&&!demoPlayed){demoPlayed=true;playDemo();demoIO.disconnect()}})},{threshold:.35});demoIO.observe(document.getElementById('demoBody'));
+
+/* Capabilities tabs */
+var caps=[['Real-Time Transcription','Speech is transcribed as the conversation happens — in English or Hindi/Hinglish — so Lily responds to what was just said, not a recording reviewed later.'],['Live Coaching Prompts','In Mode B, suggestions appear privately on your screen while there is still time to use them: phrasing, answers and next questions shaped by context.'],['Contextual Knowledge Retrieval','Your knowledge base, client notes and history are recalled at every turn, so assistance is always grounded in your material.'],['Personalized Tone & Playbooks','Your profile — tone preferences, approved phrases, positioning and instructions — shapes both modes, so Lily works the way you work.'],['Conversation History','Past conversations are stored and searchable, and relevant history becomes context for the next call with the same client.'],['Sentiment & Tone Monitoring','Live sentiment and tone indicators in Mode B help you read the room — engaged, cautious, tense — while the call is still live.'],['Automatic Summaries','Every conversation closes with a structured summary: what was discussed, decided and left open.'],['Action Items & Follow-Ups','Action items are extracted and a follow-up draft is prepared, ready for you to review and send.'],['Multilingual Support','Designed for English and Hindi/Hinglish conversations. Hindi voice quality has not yet been verified live — stated plainly, as the product itself does.']];
+var ct=document.getElementById('capTabs'),cp=document.getElementById('capPanel');
+caps.forEach(function(c,i){var b=document.createElement('button');b.className='tab'+(i===0?' on':'');b.textContent=c[0];b.onclick=function(){ct.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});b.classList.add('on');cp.innerHTML='<h3 style="font-size:22px;margin-bottom:8px">'+c[0]+'</h3><p style="color:var(--mut);margin:0;max-width:720px">'+c[1]+'</p>'};ct.appendChild(b)});cp.innerHTML='<h3 style="font-size:22px;margin-bottom:8px">'+caps[0][0]+'</h3><p style="color:var(--mut);margin:0;max-width:720px">'+caps[0][1]+'</p>';
+
+/* Differentiator tabs */
+var diffs=[['01 — Learns your voice','Not voice cloning: Lily adapts phrasing and tone to the communication preferences in your profile, so suggestions and spoken replies sound like your way of saying it.'],['02 — Learns your playbook','Your approved phrases, positioning, instructions and client notes are loaded into every session — your best execution, present on every call.'],['03 — Learns your history','Previous conversations and your knowledge base become live context, retrieved per turn, so Lily remembers what was agreed last time.']];
+var dt=document.getElementById('diffTabs'),dp=document.getElementById('diffPanel');
+diffs.forEach(function(c,i){var b=document.createElement('button');b.className='tab'+(i===0?' on':'');b.textContent=c[0];b.onclick=function(){dt.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});b.classList.add('on');dp.innerHTML='<h3 style="font-size:22px;margin-bottom:8px">'+c[0]+'</h3><p style="color:var(--mut);margin:0;max-width:720px">'+c[1]+'</p>'};dt.appendChild(b)});dp.innerHTML='<h3 style="font-size:22px;margin-bottom:8px">'+diffs[0][0]+'</h3><p style="color:var(--mut);margin:0;max-width:720px">'+diffs[0][1]+'</p>';
+
+/* Use cases + solutions */
+/* Role explorer — full on Solutions, compact on Home */
+var roles=[
+['sales','Sales','Sales & Negotiation','ASSET:asset_10_5f6b323a.jpg','A professional woman on a video call at her desk, laptop in front of her','both','Hold your pricing line and your positioning with your playbook live beside you — or let Lily run a routine in-app call while you listen in and step in whenever you choose.'],
+['support','Customer Support','Customer Support','ASSET:asset_11_215ff8f4.jpg','A support professional in a suit wearing a headset, notebook in hand','b','Calmer, more consistent support calls: context and tone cues in the moment, and a complete, searchable record when the call ends.'],
+['executive','Executive','Executive & Board Conversations','ASSET:asset_12_4cb27ce1.jpg','Executives seated around a large boardroom table','b','Walk into board-level conversations briefed on the history, and walk out with decisions captured and actions assigned.'],
+['recruiting','Recruiting','Recruiting & Interviews','ASSET:asset_13_42ef71dd.jpg','A candidate with glasses being interviewed, a clipboard on the table','both','Consistent interview structure and complete capture on your calls — and routine in-app screening conversations handled by Lily under your playbook.'],
+['client','Client Relationships','Client Relationship Management','ASSET:asset_08_bbed8861.jpg','A small team meeting around a table beside bright windows','b','Every promise remembered: per-client notes and history become live context, so no relationship lives in one person\u2019s memory.'],
+['jobseeker','Job Seekers','Job Seekers & Interviews','ASSET:asset_14_a9f916b2.jpg','Two men at a table in an interview setting, one holding papers','b','Private prompts and structure during the interview itself, so you can stay fully present while Lily keeps track of the details.']];
+function modeChips(m){if(m==='both')return '<span class="tag tag-a">Mode A · Beta</span> <span class="tag tag-b">Mode B — Live Copilot</span>';return '<span class="tag tag-b">Mode B — Live Copilot</span>'}
+function buildExplorer(elId,compact){var el=document.getElementById(elId);if(!el)return;
+var tabs=roles.map(function(r,i){return '<button class="tab'+(i===0?' on':'')+'" data-role="'+r[0]+'">'+r[1]+'</button>'}).join('');
+el.innerHTML='<div class="explorer'+(compact?' compact':'')+'"><div class="tabs exp-tabs">'+tabs+'</div><div class="exp-stage"><div class="exp-photo"><img alt="" loading="lazy" decoding="async"><div class="exp-shade"></div></div><div class="exp-body"><h3></h3><p class="exp-desc"></p><div class="mode-rec"><span class="lbl">Recommended setup</span><span class="exp-chips"></span></div><p class="exp-note">Illustrative photography — the people pictured are models, not Lily AI customers.</p><p><a class="btn btn-o btn-sm" href="#product" data-nav="product">See it on the Product tour →</a></p></div></div></div>';
+var stage=el.querySelector('.exp-stage'),img=el.querySelector('.exp-photo img'),h=el.querySelector('.exp-body h3'),d=el.querySelector('.exp-desc'),c=el.querySelector('.exp-chips');
+function fill(r){img.src=r[3];img.alt=r[4];h.textContent=r[2];d.textContent=r[6];c.innerHTML=modeChips(r[5])}
+fill(roles[0]);
+el.querySelectorAll('.tab').forEach(function(b){b.addEventListener('click',function(){if(b.classList.contains('on'))return;el.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});b.classList.add('on');var r=roles.filter(function(x){return x[0]===b.getAttribute('data-role')})[0];stage.classList.add('fading');setTimeout(function(){fill(r);stage.classList.remove('fading')},230)})});
+}
+buildExplorer('solExplorer',false);buildExplorer('homeExplorer',true);
+document.getElementById('solInd').innerHTML=[['Freelancers & Consultants','Discovery, scoping and delivery calls handled with a prepared twin beside you.'],['Job Seekers','Interview practice and live private support for the conversations that decide offers.'],['Independent Professionals','One person, fully covered: briefing, capture and follow-up on every call.'],['Solo Sales Professionals','Your playbook and pricing discipline, live on every pitch.']].map(function(u){return '<div class="card"><h3>'+u[0]+'</h3><p>'+u[1]+'</p></div>'}).join('');
+document.getElementById('solTeam').innerHTML=[['Sales & Negotiation Teams','Shared playbooks keep execution consistent across every rep and region.'],['Customer Support','Shared knowledge and tone awareness for steadier, better-documented support calls.'],['Executive Teams','Decision capture and action tracking across leadership conversations.'],['Recruiting','Consistent interview structure and complete candidate conversation records.'],['Client Relationship Management','Per-client notes and history injected as context — no relationship lives in one person\u2019s memory.']].map(function(u){return '<div class="card"><h3>'+u[0]+'</h3><p>'+u[1]+'</p></div>'}).join('');
+
+/* Mode A FSM demo */
+var fsmText={Listening:'Lily is listening. When the participant speaks over a reply, the current speech is cut, that reply is discarded, and its audio is never played.',Thinking:'Your context, playbook and relevant knowledge are brought together while Lily thinks — then the reply begins.',Speaking:'Lily voices the reply into the in-app call. The owner can whisper a correction, take over, or end the session at any point.',Interrupted:'The participant started speaking, so the reply in progress stops instantly. Lily returns to listening — it never talks over the caller.'};
+function setState(s){document.getElementById('fsmPill').textContent='State: '+s;document.getElementById('fsmText').textContent=fsmText[s];document.querySelectorAll('[data-state]').forEach(function(x){x.classList.toggle('btn-p',x.getAttribute('data-state')===s);x.classList.toggle('btn-o',x.getAttribute('data-state')!==s)})}
+var fsmCycle=['Listening','Thinking','Speaking','Interrupted'],fsmIdx=0,fsmTimer=setInterval(function(){fsmIdx=(fsmIdx+1)%fsmCycle.length;setState(fsmCycle[fsmIdx])},2600);
+document.querySelectorAll('[data-state]').forEach(function(b){b.addEventListener('click',function(){clearInterval(fsmTimer);setState(b.getAttribute('data-state'))})});
+
+/* FAQ */
+var faqs=[['What is Lily AI?','A real-time conversational intelligence platform: an app connected to Lily\u2019s own private platform that listens, understands context, assists during conversations, and captures summaries, action items and follow-up drafts.'],['What is the Autonomous Calling Agent (Mode A)?','An AI agent that speaks in a live in-app call — announcing itself as AI first, following your playbook, handling interruptions, and accepting your whisper guidance, takeover or end command. It is currently in Beta.'],['What is Live Copilot (Mode B)?','A silent assistant for your own calls. Only you see the live transcript, sentiment and tone cues, and private suggested replies. It never speaks to the other party.'],['What is the difference between Mode A and Mode B?','In Mode A, Lily speaks to the other participant. In Mode B, Lily speaks only to you, on your screen. Same intelligence, two very different roles.'],['How does Lily AI understand conversations?','Speech is turned into text the moment it is spoken, Lily follows the flow of the conversation stage by stage, and every reply is shaped by your profile, playbook, client notes and knowledge, brought together as context.'],['Can the AI be interrupted?','Yes. The moment you or the other participant starts speaking, the reply in progress is cancelled, its audio is discarded, and Lily returns to listening — every reply is tracked individually, so an old reply never plays late.'],['Does Lily AI support Hindi and English?','Conversations are designed for English and Hindi/Hinglish. Hindi voice quality has not been verified live yet, so we do not promise a quality level for Hindi speech.'],['How does personalization work?','You set a tone and playbook profile and add knowledge and client notes. That material shapes every Mode A and Mode B reply — it adapts how Lily behaves; it does not rebuild Lily itself.'],['Does Lily AI support in-app calling?','Yes — Mode A runs in in-app call rooms. Participants join in the app or via a browser guest link with a consent notice.'],['Does it support regular cellular calls?','No. Phones do not give apps access to ordinary mobile call audio. Calling regular phone numbers would require a separate telephone carrier arrangement, which is not connected.'],['Where is conversation processing performed?','On Lily\u2019s own private platform — not on the phone, and never by an outside AI company. Processing on the phone itself is not available yet.'],['How are privacy and consent handled?','Explicit consent in every flow, per-region retention (30 days EU, 90 days elsewhere), guest consent before joining, and in-app export and deletion controls. See the Security & Privacy page.']];
+document.getElementById('faqList').innerHTML=faqs.map(function(f){return '<div class="faq"><button aria-expanded="false">'+f[0]+'<span>+</span></button><div class="ans">'+f[1]+'</div></div>'}).join('');
+document.querySelectorAll('.faq button').forEach(function(b){b.addEventListener('click',function(){var f=b.parentElement;var open=f.classList.toggle('open');b.setAttribute('aria-expanded',open);b.querySelector('span').textContent=open?'−':'+'})});
+
+/* Contact honest submit */
+document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault();document.getElementById('formMsg').textContent='Not sent — this form is not connected to a mail service yet, so nothing was transmitted or stored. This honesty is deliberate.'});
+
+/* Hero video: reduced-motion shows the poster still; pauses off-screen; falls back to the CSS orb on load failure */
+(function(){var video=document.getElementById('heroVideo');if(!video)return;
+var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function fallback(){video.style.display='none'}
+video.addEventListener('error',fallback,true);
+var srcEl=video.querySelector('source');if(srcEl)srcEl.addEventListener('error',fallback);
+if(reduced){video.removeAttribute('autoplay');video.pause();video.style.display='none';var bg=video.closest('.hero-bg');if(bg){bg.style.backgroundImage='url(ASSET:asset_02_f946acf3.jpg)';bg.style.backgroundSize='cover';bg.style.backgroundPosition='center'}return}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){var p=video.play();if(p&&p.catch)p.catch(function(){})}else{video.pause()}})},{threshold:.15});io.observe(video)}
+})();
+
+/* Section films (Copilot + Mode A): the source ships in the markup so each film loads
+   with the page — no script-injected source and nothing ever hides a frame. Play when
+   visible, pause off-screen; if a load ever fails, the poster frame stays on show.
+   Clicking a film toggles play/pause; reduced motion keeps the still poster. */
+(function(){var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('video.lazyvid').forEach(function(v){
+v.addEventListener('click',function(){if(v.paused){var p=v.play();if(p&&p.catch)p.catch(function(){})}else{v.pause()}});
+if(reduced){v.pause();return}
+if(!('IntersectionObserver' in window)){var p0=v.play();if(p0&&p0.catch)p0.catch(function(){});return}
+var vis=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){var pp=v.play();if(pp&&pp.catch)pp.catch(function(){})}else{v.pause()}})},{threshold:.15});vis.observe(v);
+});
+})();
+/* Mode compare toggle (Home) */
+(function(){var btns=document.querySelectorAll('[data-cmp]');if(!btns.length)return;var note=document.getElementById('cmpNote');var notes={a:'Lily speaks to the other participant — you supervise, whisper, or take over.',b:'Lily never speaks to the other party — everything here is visible only to you.'};
+btns.forEach(function(b){b.addEventListener('click',function(){var k=b.getAttribute('data-cmp');btns.forEach(function(x){x.classList.toggle('on',x===b)});document.getElementById('cmpA').hidden=k!=='a';document.getElementById('cmpB').hidden=k!=='b';if(note)note.textContent=notes[k]})})})();
+
+/* Personalization playground (Product) */
+(function(){var tV=document.getElementById('tglVoice'),tP=document.getElementById('tglPlay'),tH=document.getElementById('tglHist');if(!tV||!tP||!tH)return;var reply=document.getElementById('pgReply'),shaped=document.getElementById('pgShaped');
+var replies={0:'We can review the pricing and come back to you with some options.',
+1:'Appreciate you asking straight — let me show you what that price actually covers before we move any numbers.',
+2:'Our quoted price holds for signings this month, and it includes the full onboarding package — that is the position set in your playbook.',
+3:'Appreciate you asking straight. Our quoted price holds for signings this month, and it includes the full onboarding package — let me walk you through what is covered before we talk numbers.',
+4:'We can review the pricing — and since your budget sign-off lands at month-end, a phased start keeps this inside this quarter, like we discussed last time.',
+5:'Appreciate you asking straight. Since your budget sign-off lands at month-end, the phased start we discussed last time keeps this inside this quarter — want me to map it out?',
+6:'Our quoted price holds for signings this month with onboarding included — and with your budget sign-off at month-end, the phased start from our last conversation keeps it inside this quarter.',
+7:'Appreciate you asking straight. Our quoted price holds for signings this month and includes the full onboarding package — and since your budget sign-off lands at month-end, the phased start we discussed last time keeps it inside this quarter. Want me to walk through it?'};
+function upd(){var k=(tV.checked?1:0)+(tP.checked?2:0)+(tH.checked?4:0);reply.textContent=replies[k];var card=reply.closest('.suggest');if(card){card.classList.remove('pop');void card.offsetWidth;card.classList.add('pop')}var parts=[];if(tV.checked)parts.push('your voice');if(tP.checked)parts.push('your playbook');if(tH.checked)parts.push('your history');shaped.innerHTML=parts.length?('Shaped by: <b>'+parts.join(' · ')+'</b>'):'Generic — no personalization switched on yet. Try the switches above.'}
+[tV,tP,tH].forEach(function(t){t.addEventListener('change',upd)});upd()})();
+
+route();
+</script>
+</body></html>

@@ -1,0 +1,115 @@
+/* Lily AI design tokens. See docs/website-redesign/04-design-system.md */
+:root {
+  /* Core palette */
+  --midnight: #080b18;
+  --deep-navy: #0d1530;
+  --brand-navy: #14234a;
+  --electric: #356bff;
+  --cyan: #39d8f2;
+  --ice: #ddf8ff;
+  --violet: #8065f5;
+  --lavender: #b9aeff;
+  --canvas: #f6f8fc;
+  --white: #ffffff;
+  --ink: #11182b;
+  --slate: #56617a; /* darkened from #64708A to pass 4.5:1 on canvas */
+  --mist: #aab6d1;
+  --mint: #4be3b0;
+  --amber: #ffc46b;
+
+  /* Semantic: dark theme is the default */
+  --bg: var(--midnight);
+  --bg-raised: var(--deep-navy);
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-strong: rgba(255, 255, 255, 0.08);
+  --surface-solid: #101a38;
+  --border: rgba(170, 182, 209, 0.16);
+  --border-strong: rgba(170, 182, 209, 0.32);
+  --text: #eef3ff;
+  --text-muted: var(--mist);
+  --text-faint: #8492b3;
+  --accent: var(--cyan);
+  --accent-strong: var(--electric);
+  --link: var(--cyan);
+  --focus: var(--cyan);
+  --mode-a: var(--cyan);
+  --mode-b: var(--lavender);
+  --overlay: rgba(8, 11, 24, 0.72);
+
+  /* Gradients: each has one job */
+  --grad-depth: linear-gradient(180deg, #080b18 0%, #0d1530 55%, #14234a 100%);
+  --grad-signal: linear-gradient(90deg, #39d8f2 0%, #356bff 100%);
+  --grad-private: linear-gradient(90deg, #356bff 0%, #8065f5 100%);
+  --grad-ice: linear-gradient(180deg, #ffffff 0%, #eef6fd 100%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(8, 11, 24, 0.2);
+  --shadow-md: 0 12px 32px -12px rgba(8, 11, 24, 0.45);
+  --shadow-lg: 0 32px 80px -24px rgba(4, 8, 22, 0.7);
+  --glow-cyan: 0 0 0 1px rgba(57, 216, 242, 0.35), 0 12px 40px -10px rgba(57, 216, 242, 0.35);
+
+  /* Type */
+  --font-display: 'Sora Variable', 'Sora', system-ui, sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-lg: clamp(1.125rem, 1.02rem + 0.45vw, 1.3125rem);
+  --fs-h4: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --fs-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --fs-h2: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+  --fs-h1: clamp(2.5rem, 1.5rem + 4.6vw, 5rem);
+  --fs-hero: clamp(2.75rem, 1.3rem + 6.2vw, 6rem);
+
+  /* Space */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --section-y: clamp(72px, 5vw + 48px, 144px);
+  --gutter: clamp(20px, 4vw, 48px);
+  --max: 1240px;
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-full: 999px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 200ms;
+  --dur: 450ms;
+  --dur-slow: 800ms;
+
+  --nav-h: 72px;
+}
+
+/* Light editorial sections re-map the semantic tokens only */
+.theme-light {
+  --bg: var(--canvas);
+  --bg-raised: var(--white);
+  --surface: var(--white);
+  --surface-strong: var(--white);
+  --surface-solid: var(--white);
+  --border: rgba(17, 24, 43, 0.1);
+  --border-strong: rgba(17, 24, 43, 0.22);
+  --text: var(--ink);
+  --text-muted: var(--slate);
+  --text-faint: #6b7690;
+  --accent: #1f56e8;
+  --accent-strong: #1f56e8;
+  --link: #1f56e8;
+  --focus: #1f56e8;
+  --mode-a: #0b7f98;
+  --mode-b: #5b3fe0;
+  --shadow-md: 0 14px 40px -18px rgba(20, 35, 74, 0.25);
+  background: var(--bg);
+  color: var(--text);
+}
