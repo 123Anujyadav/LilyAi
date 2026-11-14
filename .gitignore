@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# The original single-file site (27 MB) is kept for reference, not tracked
+original
