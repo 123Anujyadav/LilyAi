@@ -506,3 +506,43 @@
 .agent__orb > span {
   border-color: rgba(154, 168, 255, 0.45);
 }
+
+/* ---------- Hero film ---------- */
+.hero__film {
+  position: absolute;
+  top: 50%;
+  right: -4%;
+  z-index: 0;
+  width: min(72%, 1180px);
+  aspect-ratio: 16 / 9;
+  transform: translateY(-52%);
+  background: url('/assets/hero-orb-poster.jpg') center / cover no-repeat;
+  mask-image: radial-gradient(ellipse 56% 60% at 50% 50%, #000 52%, transparent 100%);
+}
+.hero__film video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero {
+  background: #05050f;
+}
+.hero.atmos::before {
+  display: none;
+}
+.hero .hero__scrim {
+  background:
+    linear-gradient(90deg, rgba(5, 5, 15, 0.9) 0%, rgba(5, 5, 15, 0.55) 36%, rgba(5, 5, 15, 0) 60%),
+    linear-gradient(0deg, var(--midnight) 0%, transparent 20%);
+}
+@media (max-width: 860px) {
+  .hero__film {
+    top: var(--nav-h);
+    right: -30%;
+    width: 160%;
+    transform: none;
+  }
+  .hero .hero__scrim {
+    background: linear-gradient(0deg, var(--midnight) 0%, rgba(5, 5, 15, 0.86) 58%, rgba(5, 5, 15, 0.35) 100%);
+  }
+}

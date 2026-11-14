@@ -1,4 +1,4 @@
-import CoreVisual from '../components/CoreVisual';
+import { useEffect, useRef } from 'react';
 import { AgentMini, CopilotMini, FinalCta, HonestStatus, ModeCards } from '../components/blocks';
 import { CapabilityBento, CopilotDemo, ModeSwitcher, Pipeline, Playground, RoleExplorer, StepsPath } from '../components/demos';
 import { FieldVisual, Magnetic, Tilt, usePointerVars } from '../components/motion';
@@ -6,13 +6,44 @@ import { Button, Reveal, SectionHead } from '../components/ui';
 import { callStates, pipelineHome, problems, reliability, routes, securityHome, ticker } from '../content/site';
 import BlurText from '../reactbits/BlurText';
 
+/* The owner's orb film as the hero background. Plays muted and looped, pauses when
+   off-screen, and shows the still poster for reduced motion or if the file fails. */
+function HeroVideo() {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      v.removeAttribute('autoplay');
+      v.pause();
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.1 },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div className="hero__film" aria-hidden="true">
+      <video ref={ref} autoPlay muted loop playsInline preload="metadata" poster="/assets/hero-orb-poster.jpg">
+        <source src="/assets/hero-orb.mp4" type="video/mp4" />
+      </video>
+    </div>
+  );
+}
+
 function Hero() {
   const line1 = ['Your', 'identical', 'twin'];
   const line2 = ['on', 'every', 'call.'];
   const ref = usePointerVars<HTMLElement>();
   return (
     <section ref={ref} className="hero atmos" aria-labelledby="hero-title">
-      <CoreVisual className="hero__visual" variant="both" offset={[0.44, 0.04]} mobileOffset={[0.42, 0.62]} scrollLinked />
+      <HeroVideo />
       <div className="hero__scrim" aria-hidden="true" />
       <div className="hero__chips" aria-hidden="true">
         <div className="hchip hchip--1">

@@ -92,3 +92,14 @@ What the core is now (`CoreScene.tsx`, rewritten):
 Colour follows the film on the pages that show both modes (violet and blue). Mode A keeps a cyan core and Mode B a lavender one, so the mode colour rule still holds. The hero background, the headline accent line, the closing section, the static fallback and the small orbs inside the product demos were retinted to match.
 
 Where it appears: home hero, home closing section, Product, Mode A, Mode B, every interior closing section, and the 404 page. The video file itself is not used anywhere on the site.
+
+## Hero uses the owner's video (2026-11-14, final)
+
+At the owner's request the home hero now plays the supplied film itself instead of the WebGL core.
+
+- Source: `gemini_generated_video_e93e1c08.mp4`, re-encoded without audio to `public/assets/hero-orb.mp4` (1280x720, H.264, 1.8 MB, was 5.3 MB) with a poster frame `hero-orb-poster.jpg` (50 kB).
+- It plays muted and looped, pauses when the hero is off-screen, and shows only the still poster for reduced motion. The poster is also the background if the file fails to load.
+- It sits to the right of the headline with soft faded edges. The floating chips, pointer light and headline animation remain on top.
+- **The generator's sparkle watermark is part of the footage and is faintly visible near the lower right of the orb.** It was not removed. A clean export from the owner would be needed to lose it.
+- The 10-second loop has a visible jump where it restarts.
+- The WebGL core built to match the film is still used on Product, Mode A, Mode B, the closing sections and the 404 page. The home page therefore no longer loads the 3D chunk until the reader scrolls to a sound-field section.
