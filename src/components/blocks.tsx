@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { honestStatus, routes } from '../content/site';
 import SpotlightCard from '../reactbits/SpotlightCard';
 import CoreVisual from './CoreVisual';
+import { FieldVisual, Magnetic, Tilt } from './motion';
 import { Badge, Bars, Button, DemoLabel, Reveal } from './ui';
 
 export function PageHero({
@@ -25,6 +26,7 @@ export function PageHero({
     <section className={`pagehero ${tone === 'light' ? 'theme-light pagehero--light' : 'atmos'} ${core ? 'pagehero--core' : ''}`}>
       {core && <CoreVisual className="pagehero__visual" variant={core} offset={[0.5, 0]} mobileOffset={[0.4, 0.6]} />}
       {core && <div className="hero__scrim" aria-hidden="true" />}
+      {!core && tone === 'dark' && <FieldVisual className="field--hero" />}
       <div className="wrap pagehero__content">
         <p className="kicker">{kicker}</p>
         {badges && <div className="pagehero__badges">{badges}</div>}
@@ -94,7 +96,8 @@ export function AgentMini() {
 export function ModeCards({ compact = false }: { compact?: boolean }) {
   return (
     <div className="modes">
-      <Reveal>
+      <Reveal fx="left">
+        <Tilt max={5}>
         <SpotlightCard className="mode mode--a" spotlightColor="rgba(57, 216, 242, 0.22)">
           <div className="mode__tags">
             <Badge tone="a">Mode A</Badge>
@@ -116,8 +119,10 @@ export function ModeCards({ compact = false }: { compact?: boolean }) {
             Explore Autonomous Calling
           </Button>
         </SpotlightCard>
+        </Tilt>
       </Reveal>
-      <Reveal delay={120}>
+      <Reveal fx="right" delay={120}>
+        <Tilt max={5}>
         <SpotlightCard className="mode mode--b" spotlightColor="rgba(185, 174, 255, 0.24)">
           <div className="mode__tags">
             <Badge tone="b">Mode B</Badge>
@@ -138,6 +143,7 @@ export function ModeCards({ compact = false }: { compact?: boolean }) {
             Explore Live Copilot
           </Button>
         </SpotlightCard>
+        </Tilt>
       </Reveal>
     </div>
   );
@@ -180,7 +186,9 @@ export function FinalCta({
         <Reveal>
           <h2>{title}</h2>
           <p>{sub}</p>
-          <Button to={to}>{label}</Button>
+          <Magnetic>
+            <Button to={to}>{label}</Button>
+          </Magnetic>
         </Reveal>
       </div>
     </section>

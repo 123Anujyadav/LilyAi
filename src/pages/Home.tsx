@@ -1,6 +1,7 @@
 import CoreVisual from '../components/CoreVisual';
 import { AgentMini, CopilotMini, FinalCta, HonestStatus, ModeCards } from '../components/blocks';
 import { CapabilityBento, CopilotDemo, ModeSwitcher, Pipeline, Playground, RoleExplorer, StepsPath } from '../components/demos';
+import { FieldVisual, Magnetic, Tilt, usePointerVars } from '../components/motion';
 import { Button, Reveal, SectionHead } from '../components/ui';
 import { callStates, pipelineHome, problems, reliability, routes, securityHome, ticker } from '../content/site';
 import BlurText from '../reactbits/BlurText';
@@ -8,10 +9,34 @@ import BlurText from '../reactbits/BlurText';
 function Hero() {
   const line1 = ['Your', 'identical', 'twin'];
   const line2 = ['on', 'every', 'call.'];
+  const ref = usePointerVars<HTMLElement>();
   return (
-    <section className="hero atmos" aria-labelledby="hero-title">
+    <section ref={ref} className="hero atmos" aria-labelledby="hero-title">
       <CoreVisual className="hero__visual" variant="both" offset={[0.44, 0.04]} mobileOffset={[0.42, 0.62]} scrollLinked />
       <div className="hero__scrim" aria-hidden="true" />
+      <div className="hero__chips" aria-hidden="true">
+        <div className="hchip hchip--1">
+          <i />
+          <span>
+            <b>Listening</b>
+            Live transcript running
+          </span>
+        </div>
+        <div className="hchip hchip--2">
+          <i />
+          <span>
+            <b>Briefing you live</b>
+            Private suggestion ready
+          </span>
+        </div>
+        <div className="hchip hchip--3">
+          <i />
+          <span>
+            <b>English + Hindi / Hinglish</b>
+            Designed bilingual support
+          </span>
+        </div>
+      </div>
       <div className="wrap hero__content">
         <p className="kicker kicker--live">
           <i aria-hidden="true" />
@@ -40,7 +65,9 @@ function Hero() {
           <BlurText text="Listening. Thinking. Briefing you live." delay={140} trigger="load" animateBy="words" direction="bottom" />
         </div>
         <div className="hero__cta">
-          <Button to={routes.product}>Explore Lily AI</Button>
+          <Magnetic>
+            <Button to={routes.product}>Explore Lily AI</Button>
+          </Magnetic>
           <Button to={routes.how} variant="ghost" arrow>
             Discover how it works
           </Button>
@@ -98,7 +125,9 @@ export default function Home() {
             sub="One view for each mode: Lily assisting a live call privately from behind the scenes, and Lily speaking on a call herself. Both are illustrative interface simulations."
           />
           <div className="action-grid">
-            <Reveal className="action action--b">
+            <Reveal fx="left">
+              <Tilt>
+                <div className="action action--b">
               <CopilotMini />
               <div className="action__cap">
                 <h3>The copilot only you can see</h3>
@@ -107,8 +136,12 @@ export default function Home() {
                   Explore Live Copilot
                 </Button>
               </div>
+                </div>
+              </Tilt>
             </Reveal>
-            <Reveal className="action action--a" delay={120}>
+            <Reveal fx="right" delay={120}>
+              <Tilt>
+                <div className="action action--a">
               <AgentMini />
               <div className="action__cap">
                 <h3>The agent that speaks for you</h3>
@@ -120,6 +153,8 @@ export default function Home() {
                   Explore Autonomous Calling
                 </Button>
               </div>
+                </div>
+              </Tilt>
             </Reveal>
           </div>
         </div>
@@ -152,14 +187,15 @@ export default function Home() {
       </section>
 
       {/* Meet Lily */}
-      <section className="section section--depth atmos">
+      <section className="section section--depth atmos has-field">
+        <FieldVisual tone="lavender" />
         <div className="wrap meet">
           <SectionHead
             kicker="Meet Lily AI"
             title="Meet the intelligence behind every conversation."
             sub="Lily listens, understands context, assists in the moment, and captures what matters. Press play to watch a copilot moment unfold."
           />
-          <Reveal>
+          <Reveal fx="tilt">
             <CopilotDemo />
           </Reveal>
         </div>
@@ -170,7 +206,7 @@ export default function Home() {
         <div className="wrap">
           <SectionHead kicker="Two intelligent modes" title="Two ways to make every conversation smarter." align="center" />
           <ModeCards />
-          <Reveal>
+          <Reveal fx="tilt">
             <ModeSwitcher />
           </Reveal>
         </div>
@@ -207,7 +243,7 @@ export default function Home() {
             title="Trained on you, not just data."
             sub="Generic AI note-takers summarize what happened. Lily AI is designed to use your communication preferences, playbooks, and conversation history to provide more relevant assistance. Switch each source on and off and watch the reply change."
           />
-          <Reveal>
+          <Reveal fx="tilt">
             <Playground />
           </Reveal>
         </div>
@@ -217,7 +253,7 @@ export default function Home() {
       <section className="section theme-light">
         <div className="wrap">
           <SectionHead kicker="Use cases" title="Wherever business happens on a call." />
-          <Reveal>
+          <Reveal fx="zoom">
             <RoleExplorer idBase="home-roles" />
           </Reveal>
           <Reveal className="section__more">
@@ -229,7 +265,8 @@ export default function Home() {
       </section>
 
       {/* Platform */}
-      <section className="section section--depth atmos">
+      <section className="section section--depth atmos has-field">
+        <FieldVisual tone="cyan" />
         <div className="wrap">
           <SectionHead
             kicker="The platform"

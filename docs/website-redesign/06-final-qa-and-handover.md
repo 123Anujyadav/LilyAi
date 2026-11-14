@@ -44,6 +44,11 @@ The single 27 MB HTML file was rebuilt as a Vite + React + TypeScript project wi
 | Contact form | Empty submit shows three errors and focuses the first field; a malformed email shows a format error; a valid submit shows "Not sent" and makes no network request |
 | Live WebGL core | Seen rendering at 768, 1440 and 1920px with waveform, lattice and both signal paths |
 
+## Motion and 3D pass (2026-11-14)
+Checked: build passes; lint 0 errors; no console errors; no horizontal overflow at 391px on 12 routes; the upgraded hero core (equalizer ring, pulse rings, glass rings, floating chips) and the 3D sound field were seen rendering at 1440px.
+
+Not confirmed by screenshot: the pointer tilt, magnetic buttons, cursor light and scroll-in animations. The preview window was in the background during this pass, which pauses animation, so these were verified by code and type-check only. Frame rate was not measured.
+
 ## Not tested
 - **No Lighthouse or Core Web Vitals measurement.** No performance score is claimed.
 - A full keyboard-only walkthrough of every page, and a screen reader pass.

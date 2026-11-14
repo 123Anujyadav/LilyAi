@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { CardGrid, FinalCta, HonestStatus, ModeCards, PageHero } from '../components/blocks';
 import { AgentDemo, CapabilityBento, CopilotDemo, Frame, Pipeline, Playground, RoleExplorer, StepsPath } from '../components/demos';
+import { FieldVisual } from '../components/motion';
 import { Accordion, Badge, Button, Notice, Reveal, SectionHead } from '../components/ui';
 import {
   aboutCards,
@@ -83,7 +84,7 @@ export function Product() {
             title="Trained on you, not just data."
             sub="Generic assistants answer from general knowledge. Lily's suggestions are shaped by three things you control. Try switching each one on and off, and watch the reply Lily would prepare for you change."
           />
-          <Reveal>
+          <Reveal fx="tilt">
             <Playground />
           </Reveal>
           <ul className="pillars">
@@ -152,7 +153,7 @@ export function ModeA() {
               sub="Select a state to see what Lily is doing. When the participant speaks over a reply, the current speech is cut and that reply is discarded."
             />
           </div>
-          <Reveal>
+          <Reveal fx="tilt">
             <AgentDemo />
           </Reveal>
         </div>
@@ -220,7 +221,7 @@ export function ModeB() {
       <section className="section">
         <div className="wrap">
           <SectionHead kicker="During the call" title="Your call. Your screen only." />
-          <Reveal>
+          <Reveal fx="tilt">
             <CopilotDemo />
           </Reveal>
         </div>
@@ -254,7 +255,7 @@ export function ModeB() {
               sub="Summary, action items and a follow-up draft generated when the conversation ends."
             />
           </div>
-          <Reveal>
+          <Reveal fx="tilt">
             <Frame title="Post-call brief" tone="b">
               <div className="brief">
                 <div>
@@ -309,7 +310,8 @@ export function HowItWorks() {
           <StepsPath detail />
         </div>
       </section>
-      <section className="section section--depth atmos">
+      <section className="section section--depth atmos has-field">
+        <FieldVisual />
         <div className="wrap">
           <SectionHead kicker="Under the stages" title="One signal, followed turn by turn." sub="Hover or focus a stage to follow the signal through the platform." />
           <Reveal>
@@ -364,7 +366,7 @@ export function Solutions() {
       />
       <section className="section theme-light">
         <div className="wrap">
-          <Reveal>
+          <Reveal fx="zoom">
             <RoleExplorer idBase="sol-roles" />
           </Reveal>
         </div>
@@ -389,7 +391,8 @@ export function Technology() {
         title="Engineered for real-time conversations."
         sub="One private platform, designed end to end for live conversation — fast, careful, and always under your control."
       />
-      <section className="section section--depth atmos">
+      <section className="section section--depth atmos has-field">
+        <FieldVisual />
         <div className="wrap">
           <SectionHead kicker="The pipeline" title="From your voice to the reply." />
           <Reveal>

@@ -1,0 +1,417 @@
+/* Motion and depth layer. Everything here is decorative: the global reduced-motion rule
+   in base.css switches animations and transitions off, and the JS helpers do nothing
+   for reduced motion or touch pointers. */
+
+/* ---------- Scroll progress ---------- */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 120;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--electric) 60%, var(--violet));
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/* ---------- Cursor light ---------- */
+.cursor-glow {
+  position: fixed;
+  top: -260px;
+  left: -260px;
+  z-index: 3;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(57, 216, 242, 0.11) 0%, rgba(53, 107, 255, 0.06) 35%, transparent 65%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 600ms var(--ease);
+  will-change: transform;
+}
+.cursor-glow.is-on {
+  opacity: 1;
+}
+
+/* ---------- Page transition ---------- */
+.page-in {
+  animation: page-in 700ms var(--ease) both;
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* ---------- 3D tilt ---------- */
+.tilt {
+  display: grid;
+  perspective: 1200px;
+}
+.tilt__inner {
+  position: relative;
+  display: grid;
+  border-radius: var(--r-xl);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: box-shadow var(--dur) var(--ease);
+  will-change: transform;
+}
+.tilt.is-tilting .tilt__inner {
+  box-shadow: 0 40px 90px -40px rgba(57, 216, 242, 0.35);
+}
+.tilt__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.13), transparent 42%);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.tilt.is-tilting .tilt__glare {
+  opacity: 1;
+}
+.action-grid > .reveal,
+.modes > .reveal {
+  display: grid;
+}
+/* Lift inner content toward the viewer while tilting */
+.tilt.is-tilting .mock,
+.tilt.is-tilting .mode__tags,
+.tilt.is-tilting .mode h3 {
+  transform: translateZ(28px);
+}
+.mock,
+.mode__tags,
+.mode h3 {
+  transition: transform var(--dur) var(--ease);
+}
+
+.magnetic {
+  display: inline-block;
+  transition: transform 500ms var(--ease);
+}
+
+/* ---------- Reveal variants ---------- */
+.reveal--fx-tilt.reveal--pre {
+  opacity: 0;
+  transform: perspective(1400px) rotateX(18deg) translateY(70px) scale(0.95);
+  transform-origin: 50% 0%;
+}
+.reveal--fx-left.reveal--pre {
+  opacity: 0;
+  transform: perspective(1400px) translateX(-70px) rotateY(12deg);
+}
+.reveal--fx-right.reveal--pre {
+  opacity: 0;
+  transform: perspective(1400px) translateX(70px) rotateY(-12deg);
+}
+.reveal--fx-zoom.reveal--pre {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.reveal--fx-tilt.reveal--in,
+.reveal--fx-left.reveal--in,
+.reveal--fx-right.reveal--in,
+.reveal--fx-zoom.reveal--in {
+  transition:
+    opacity 900ms var(--ease),
+    transform 1200ms var(--ease);
+}
+
+/* ---------- Headings: words flip up one by one ---------- */
+.head__title--words {
+  perspective: 900px;
+}
+.head__title--words .w {
+  display: inline-block;
+  margin-right: 0.26em;
+  transform-origin: 50% 100%;
+}
+.head.reveal--pre {
+  opacity: 1;
+  transform: none;
+}
+.head.reveal--pre .w {
+  opacity: 0;
+  transform: translateY(0.7em) rotateX(-75deg);
+}
+.head.reveal--pre .kicker,
+.head.reveal--pre .head__sub {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.head.reveal--in .w {
+  transition:
+    opacity 700ms var(--ease),
+    transform 900ms var(--ease);
+  transition-delay: calc(var(--i) * 55ms);
+}
+.head.reveal--in .kicker,
+.head.reveal--in .head__sub {
+  transition:
+    opacity 800ms var(--ease),
+    transform 800ms var(--ease);
+}
+.head.reveal--in .head__sub {
+  transition-delay: 350ms;
+}
+
+/* Kicker gets a line that draws in */
+.head .kicker::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+}
+.head.reveal--pre .kicker::before {
+  transform: scaleX(0);
+}
+.head.reveal--in .kicker::before {
+  transition: transform 900ms var(--ease) 200ms;
+}
+
+/* ---------- Staggered grids ---------- */
+.reveal--pre .bento__cell {
+  opacity: 0;
+  transform: perspective(900px) translateY(36px) rotateX(14deg);
+}
+.reveal--in .bento__cell {
+  transition:
+    opacity 700ms var(--ease),
+    transform 900ms var(--ease),
+    border-color var(--dur) var(--ease);
+  transition-delay: calc(var(--i) * 70ms), calc(var(--i) * 70ms), 0ms;
+}
+.problem__item.reveal--in .problem__n {
+  -webkit-text-stroke-color: #1f56e8;
+  transition: -webkit-text-stroke-color 900ms var(--ease) 300ms;
+}
+
+/* ---------- Hero depth chips ---------- */
+.hero__chips {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.hchip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(221, 248, 255, 0.2);
+  background: linear-gradient(135deg, rgba(20, 35, 74, 0.72), rgba(13, 21, 48, 0.5));
+  backdrop-filter: blur(14px);
+  box-shadow: 0 24px 60px -24px rgba(4, 8, 22, 0.9);
+  font-size: 0.8125rem;
+  color: #aab6d1;
+  white-space: nowrap;
+  --d: 18;
+  translate: calc(var(--mx, 0) * var(--d) * 1px) calc(var(--my, 0) * var(--d) * 1px);
+  animation:
+    chip-in 1000ms var(--ease) both,
+    chip-float 7s ease-in-out infinite;
+}
+.hchip b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #fff;
+}
+.hchip i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 14px var(--cyan);
+}
+.hchip--1 {
+  top: 24%;
+  right: 30%;
+  --d: 30;
+  animation-delay: 1300ms, 0s;
+}
+.hchip--2 {
+  top: 60%;
+  right: 6%;
+  --d: -22;
+  animation-delay: 1500ms, -2.5s;
+}
+.hchip--2 i {
+  background: var(--lavender);
+  box-shadow: 0 0 14px var(--lavender);
+}
+.hchip--3 {
+  top: 76%;
+  right: 34%;
+  --d: 14;
+  animation-delay: 1700ms, -4.5s;
+}
+.hchip--3 i {
+  background: var(--mint);
+  box-shadow: 0 0 14px var(--mint);
+}
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    scale: 0.85;
+    filter: blur(8px);
+  }
+}
+@keyframes chip-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@media (max-width: 1180px) {
+  .hero__chips {
+    display: none;
+  }
+}
+
+/* ---------- Ambient 3D field ---------- */
+.has-field {
+  overflow: hidden;
+  isolation: isolate;
+}
+.field {
+  position: absolute !important;
+  inset: auto 0 0 0;
+  z-index: 0;
+  height: min(70%, 620px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1600ms var(--ease);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
+}
+.field.is-live {
+  opacity: 0.85;
+}
+.field--hero {
+  height: 78%;
+}
+.has-field > .wrap {
+  z-index: 1;
+}
+
+/* ---------- Small living details ---------- */
+.roles__photo img {
+  animation:
+    fade 600ms var(--ease) both,
+    kenburns 14s ease-in-out infinite alternate;
+}
+@keyframes kenburns {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 1.08;
+  }
+}
+
+.path__step.is-on .path__dot {
+  animation: dot-pulse 2.4s var(--ease) infinite;
+}
+@keyframes dot-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+.statechain li {
+  animation: state-on 7s linear infinite;
+}
+.statechain li:nth-child(2) {
+  animation-delay: 1s;
+}
+.statechain li:nth-child(3) {
+  animation-delay: 2s;
+}
+.statechain li:nth-child(4) {
+  animation-delay: 3s;
+}
+.statechain li:nth-child(5) {
+  animation-delay: 4s;
+}
+.statechain li:nth-child(6) {
+  animation-delay: 5s;
+}
+.statechain li:nth-child(7) {
+  animation-delay: 6s;
+}
+@keyframes state-on {
+  0%,
+  12% {
+    background: var(--cyan);
+    border-color: var(--cyan);
+    color: var(--midnight);
+    box-shadow: 0 0 22px -4px var(--cyan);
+  }
+  16%,
+  100% {
+    background: transparent;
+    border-color: var(--border-strong);
+    color: var(--ice);
+    box-shadow: none;
+  }
+}
+
+/* Light sweep across primary buttons */
+.btn--primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn--primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(57, 216, 242, 0.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.btn--primary:hover::after {
+  transform: translateX(120%);
+  transition: transform 900ms var(--ease);
+}
+
+/* Product frames hover a little, as if floating */
+.mock__orb,
+.agent__orb {
+  animation: bob 5s ease-in-out infinite;
+}
+@keyframes bob {
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+/* Final CTA heading glow breathes */
+.final h2 {
+  animation: breathe 6s ease-in-out infinite;
+}
+@keyframes breathe {
+  50% {
+    text-shadow: 0 0 60px rgba(57, 216, 242, 0.45);
+  }
+}
+
+/* Keep the two "in action" captions level */
+.action .mock {
+  flex: 1;
+}

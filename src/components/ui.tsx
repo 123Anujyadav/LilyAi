@@ -75,7 +75,17 @@ export function SectionHead({
   return (
     <Reveal className={`head head--${align}`}>
       {kicker && <p className="kicker">{kicker}</p>}
-      <H className="head__title">{title}</H>
+      {typeof title === 'string' ? (
+        <H className="head__title head__title--words" aria-label={title}>
+          {title.split(' ').map((w, i) => (
+            <span key={i} className="w" aria-hidden="true" style={{ ['--i' as string]: i }}>
+              {w}
+            </span>
+          ))}
+        </H>
+      ) : (
+        <H className="head__title">{title}</H>
+      )}
       {sub && <p className="head__sub">{sub}</p>}
       {children}
     </Reveal>
@@ -87,11 +97,13 @@ export function Reveal({
   children,
   className = '',
   delay = 0,
+  fx = 'rise',
   as: Tag = 'div',
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
+  fx?: 'rise' | 'tilt' | 'left' | 'right' | 'zoom';
   as?: 'div' | 'li' | 'section' | 'article';
 }) {
   const ref = useRef<HTMLElement>(null);
@@ -122,7 +134,7 @@ export function Reveal({
   return (
     <Comp
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={`reveal ${state === 'pre' ? 'reveal--pre' : ''} ${state === 'in' ? 'reveal--in' : ''} ${className}`}
+      className={`reveal reveal--fx-${fx} ${state === 'pre' ? 'reveal--pre' : ''} ${state === 'in' ? 'reveal--in' : ''} ${className}`}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}

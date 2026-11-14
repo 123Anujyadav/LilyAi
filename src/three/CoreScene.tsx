@@ -348,6 +348,88 @@ function SignalPath({
   );
 }
 
+
+/* A ring of bars around the core that behaves like a live audio spectrum */
+function Equalizer({ count, radius, color }: { count: number; radius: number; color: THREE.Color }) {
+  const ref = useRef<THREE.InstancedMesh>(null);
+  const dummy = useMemo(() => new THREE.Object3D(), []);
+  useFrame(({ clock }) => {
+    const m = ref.current;
+    if (!m) return;
+    const t = clock.elapsedTime;
+    for (let i = 0; i < count; i++) {
+      const a = (i / count) * Math.PI * 2;
+      const v = 0.5 + 0.5 * Math.sin(a * 5 + t * 2.6) * Math.sin(a * 2 - t * 1.3) + 0.25 * Math.sin(a * 13 + t * 5.2);
+      const h = 0.06 + Math.max(0, v) * 0.42;
+      dummy.position.set(Math.cos(a) * radius, 0, Math.sin(a) * radius);
+      dummy.rotation.set(0, -a, 0);
+      dummy.scale.set(1, h, 1);
+      dummy.updateMatrix();
+      m.setMatrixAt(i, dummy.matrix);
+    }
+    m.instanceMatrix.needsUpdate = true;
+    m.rotation.y = t * 0.08;
+  });
+  return (
+    <group rotation={[0.42, 0, 0.12]}>
+      <instancedMesh ref={ref} args={[undefined, undefined, count]} frustumCulled={false}>
+        <boxGeometry args={[0.022, 1, 0.022]} />
+        <meshBasicMaterial color={color} transparent opacity={0.75} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </instancedMesh>
+    </group>
+  );
+}
+
+/* Expanding rings: each one is a spoken word leaving the core */
+function Pulses({ color, n = 3 }: { color: THREE.Color; n?: number }) {
+  const group = useRef<THREE.Group>(null);
+  const { camera } = useThree();
+  useFrame(({ clock }) => {
+    const g = group.current;
+    if (!g) return;
+    g.quaternion.copy(camera.quaternion);
+    g.children.forEach((c, i) => {
+      const u = (clock.elapsedTime * 0.22 + i / n) % 1;
+      const mesh = c as THREE.Mesh;
+      mesh.scale.setScalar(1.3 + u * 2.6);
+      (mesh.material as THREE.MeshBasicMaterial).opacity = (1 - u) * (1 - u) * 0.5;
+    });
+  });
+  return (
+    <group ref={group}>
+      {Array.from({ length: n }, (_, i) => (
+        <mesh key={i}>
+          <ringGeometry args={[0.985, 1, 96]} />
+          <meshBasicMaterial color={color} transparent opacity={0} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+/* Solid glass orbit rings that catch the light as they turn */
+function GlassRing({ radius, tube, tilt, speed, color }: { radius: number; tube: number; tilt: [number, number, number]; speed: number; color: THREE.Color }) {
+  const ref = useRef<THREE.Mesh>(null);
+  useFrame((_, dt) => {
+    if (ref.current) ref.current.rotation.z += dt * speed;
+  });
+  return (
+    <group rotation={tilt}>
+      <mesh ref={ref}>
+        <torusGeometry args={[radius, tube, 12, 160]} />
+        <shaderMaterial
+          transparent
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          uniforms={{ uC: { value: color } }}
+          vertexShader={`varying vec3 vN; varying vec3 vV; varying vec2 vUv; void main(){ vUv=uv; vec4 mv=modelViewMatrix*vec4(position,1.0); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`}
+          fragmentShader={`uniform vec3 uC; varying vec3 vN; varying vec3 vV; varying vec2 vUv; void main(){ float f=pow(1.0-abs(dot(vN,vV)),1.6); float sweep=pow(max(0.0,sin(vUv.x*6.2831)),8.0); gl_FragColor=vec4(uC*(0.35+f*0.9)+vec3(1.0)*sweep*0.8, 0.25+f*0.5+sweep*0.5); }`}
+        />
+      </mesh>
+    </group>
+  );
+}
+
 function ContextNodes({ count }: { count: number }) {
   const group = useRef<THREE.Group>(null);
   const nodes = useMemo(
@@ -463,7 +545,7 @@ function Rig({
     g.position.x = offset[0] * viewport.width * 0.5;
     g.position.y = offset[1] * viewport.height * 0.5 + s * 1.4;
     const base = Math.min(viewport.width / 4.6, viewport.height / 7.0, 1);
-    g.scale.setScalar(base * (1 - s * 0.25));
+    g.scale.setScalar(base * (1 - s * 0.25) * (1 + Math.sin(state.clock.elapsedTime * 0.9) * 0.015));
   });
 
   return (
@@ -480,6 +562,10 @@ function Rig({
         {hi && <SoundRing radius={2.7} tilt={[1.4, 0.6, -0.2]} color={VIOLET} speed={0.5} amp={0.1} freq={12} />}
         {variant !== 'b' && <SignalPath points={PATH_A} color={CYAN} count={hi ? 110 : 50} speed={0.11} />}
         {variant !== 'a' && <SignalPath points={PATH_B} color={LAVENDER} count={hi ? 110 : 50} speed={0.09} />}
+        <Equalizer count={hi ? 96 : 48} radius={1.48} color={tint} />
+        <Pulses color={tint} n={hi ? 3 : 2} />
+        <GlassRing radius={2.05} tube={0.012} tilt={[1.1, 0.5, 0]} speed={0.25} color={ICE} />
+        {hi && <GlassRing radius={2.5} tube={0.008} tilt={[0.5, -0.9, 0.4]} speed={-0.18} color={LAVENDER} />}
         <ContextNodes count={hi ? 9 : 5} />
       </group>
     </>

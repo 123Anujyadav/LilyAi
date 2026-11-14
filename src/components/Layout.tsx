@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { legacyHashes, meta, routes } from '../content/site';
+import { CursorGlow, ScrollProgress } from './motion';
 import { Button } from './ui';
 
 const SITE_URL = 'https://example.com'; /* placeholder: the deployment domain is not known yet */
@@ -308,9 +309,13 @@ export default function Layout() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
+      <ScrollProgress />
+      <CursorGlow />
       <Nav />
       <main id="main" ref={main} tabIndex={-1}>
-        <Outlet />
+        <div key={pathname} className="page-in">
+          <Outlet />
+        </div>
       </main>
       <Footer />
     </>

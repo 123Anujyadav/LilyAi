@@ -48,3 +48,31 @@ Variants: `both` (home, product, 404), `a` (Mode A), `b` (Mode B). Pointer movem
 | Video | none | — |
 
 The whole `dist` folder is 2.5 MB, against 27 MB for the original single file.
+
+## Motion and 3D additions (2026-11-14)
+
+Added at the owner's request for more motion and more 3D.
+
+**In the core (`CoreScene.tsx`)**
+- **Equalizer ring:** 96 instanced bars around the core that move like a live audio spectrum (48 on low quality).
+- **Pulse rings:** expanding rings that leave the core, like words being spoken.
+- **Glass orbit rings:** two solid torus rings with a fresnel edge and a travelling highlight.
+- A slow breathing scale on the whole rig.
+
+**New scene (`FieldScene.tsx`)**
+- **Sound field:** a plane of about 8,300 points carrying travelling waves, seen at a low angle. The pointer sends a ripple through it. Used behind "Meet Lily" and "Platform" on the home page, behind the pipeline sections, and in the six text-only dark page heroes. It is lazy-loaded, paused off-screen, reduced to about 2,500 points on low-power devices, and not rendered at all for reduced motion, Save-Data, or without WebGL.
+
+**Pointer depth (`components/motion.tsx`)**
+- **Tilt:** mode cards and the two "in action" cards tilt in 3D toward the pointer, with a moving highlight and inner content lifted on the Z axis.
+- **Hero chips:** three glass status chips float around the core and shift at different depths with the pointer. Hidden below 1180px.
+- **Magnetic buttons:** the hero and closing calls to action lean toward the pointer.
+- **Cursor light:** a soft glow follows the pointer across the page.
+- All four are disabled on touch devices and for reduced motion.
+
+**Scroll motion (`styles/motion.css`)**
+- Section headings flip up word by word in 3D; kicker lines draw in.
+- Product frames tilt up from the page as they enter; paired cards swing in from left and right; capability cells stagger in.
+- A reading progress bar along the top edge, and a short fade between pages.
+- Small living details: call states light up in sequence, active step dots pulse, orbs bob, role photos drift slowly, primary buttons get a light sweep on hover.
+
+**Cost:** the home page now creates up to four WebGL canvases (hero core, two fields, closing core). Only the ones on screen render. This has not been profiled on a low-power device.
