@@ -2,81 +2,62 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
-/* The Lily conversational core.
-   - A breathing intelligence core (noise-displaced shell + nucleus)
-   - Sound rings that carry a live waveform
-   - Two signal paths: Mode A (cyan, travels outward to the other participant)
+/* The Lily conversational core, modelled on the brand's orb film:
+   - a glass sphere with a geodesic wireframe and soft reflections
+   - a wavy ribbon of energy and a bright live waveform inside it
+   - thin orbit rings, and bokeh particles drifting around it
+   - two signal paths: Mode A (cyan, travels outward to the other participant)
      and Mode B (lavender, loops back privately to the owner)
-   - Context nodes in orbit
-   Everything is procedural; there are no downloaded 3D assets. */
+   Everything is procedural; there are no downloaded 3D assets or video. */
 
 export type CoreVariant = 'both' | 'a' | 'b';
 export type CoreQuality = 'high' | 'low';
 
 const CYAN = new THREE.Color('#39d8f2');
-const BLUE = new THREE.Color('#356bff');
-const VIOLET = new THREE.Color('#8065f5');
 const LAVENDER = new THREE.Color('#b9aeff');
-const ICE = new THREE.Color('#ddf8ff');
 
-const NOISE = /* glsl */ `
-vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
-vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
-float snoise(vec3 v){
-  const vec2 C=vec2(1.0/6.0,1.0/3.0);const vec4 D=vec4(0.0,0.5,1.0,2.0);
-  vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);
-  vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.0-g;vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);
-  vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;
-  i=mod289(i);
-  vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));
-  float n_=0.142857142857;vec3 ns=n_*D.wyz-D.xzx;
-  vec4 j=p-49.0*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.0*x_);
-  vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.0-abs(x)-abs(y);
-  vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);
-  vec4 s0=floor(b0)*2.0+1.0;vec4 s1=floor(b1)*2.0+1.0;vec4 sh=-step(h,vec4(0.0));
-  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
-  vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);
-  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
-  p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;
-  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0);m=m*m;
-  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
-}`;
+type Palette = { glow: THREE.Color; ribbonA: THREE.Color; ribbonB: THREE.Color; wave: THREE.Color; ring: THREE.Color; glass: THREE.Color };
+const PALETTES: Record<CoreVariant, Palette> = {
+  both: {
+    glow: new THREE.Color('#6d5cff'),
+    ribbonA: new THREE.Color('#9a7bff'),
+    ribbonB: new THREE.Color('#4f7dff'),
+    wave: new THREE.Color('#e3b4ff'),
+    ring: new THREE.Color('#9aa8ff'),
+    glass: new THREE.Color('#a9c8ff'),
+  },
+  a: {
+    glow: new THREE.Color('#1fa9d6'),
+    ribbonA: new THREE.Color('#39d8f2'),
+    ribbonB: new THREE.Color('#356bff'),
+    wave: new THREE.Color('#ddf8ff'),
+    ring: new THREE.Color('#7fdcf5'),
+    glass: new THREE.Color('#a9e6ff'),
+  },
+  b: {
+    glow: new THREE.Color('#8065f5'),
+    ribbonA: new THREE.Color('#c3b4ff'),
+    ribbonB: new THREE.Color('#8065f5'),
+    wave: new THREE.Color('#f1dcff'),
+    ring: new THREE.Color('#b9aeff'),
+    glass: new THREE.Color('#cfc4ff'),
+  },
+};
 
-function Core({ quality, tint }: { quality: CoreQuality; tint: THREE.Color }) {
-  const mat = useRef<THREE.ShaderMaterial>(null);
-  const uniforms = useMemo(
-    () => ({
-      uTime: { value: 0 },
-      uA: { value: BLUE.clone() },
-      uB: { value: tint.clone() },
-      uC: { value: VIOLET.clone() },
-    }),
-    [tint],
-  );
-  useFrame((_, dt) => {
-    if (mat.current) mat.current.uniforms.uTime.value += dt;
-  });
+/* ---------- Glass sphere ---------- */
+function GlassSphere({ color, segments }: { color: THREE.Color; segments: number }) {
   return (
-    <mesh>
-      <icosahedronGeometry args={[1.18, quality === 'high' ? 40 : 18]} />
+    <mesh renderOrder={8}>
+      <sphereGeometry args={[1.3, segments, segments]} />
       <shaderMaterial
-        ref={mat}
-        uniforms={uniforms}
         transparent
         depthWrite={false}
+        uniforms={{ uC: { value: color } }}
         vertexShader={
-          NOISE +
           /* glsl */ `
-          uniform float uTime; varying vec3 vN; varying vec3 vV; varying float vD;
+          varying vec3 vN; varying vec3 vV;
           void main(){
-            float n = snoise(normal*1.35 + uTime*0.22);
-            float n2 = snoise(normal*3.4 - uTime*0.35)*0.35;
-            float d = (n+n2)*0.11;
-            vD = d;
-            vec3 p = position + normal*d;
-            vec4 mv = modelViewMatrix*vec4(p,1.0);
+            vec4 mv = modelViewMatrix*vec4(position,1.0);
             vN = normalize(normalMatrix*normal);
             vV = normalize(-mv.xyz);
             gl_Position = projectionMatrix*mv;
@@ -84,13 +65,17 @@ function Core({ quality, tint }: { quality: CoreQuality; tint: THREE.Color }) {
         }
         fragmentShader={
           /* glsl */ `
-          uniform vec3 uA; uniform vec3 uB; uniform vec3 uC; varying vec3 vN; varying vec3 vV; varying float vD;
+          uniform vec3 uC; varying vec3 vN; varying vec3 vV;
           void main(){
-            float f = pow(1.0 - max(dot(vN,vV),0.0), 2.2);
-            vec3 base = mix(vec3(0.02,0.04,0.12), uA*0.55, smoothstep(-0.2,0.25,vD));
-            base = mix(base, uC*0.6, smoothstep(0.05,0.3,vD)*0.5);
-            vec3 col = base*0.9 + uB*f*1.5 + vec3(1.0)*pow(f,5.0)*0.6;
-            float a = mix(0.5, 0.98, smoothstep(0.0,0.75,f));
+            float ndv = max(dot(vN,vV),0.0);
+            float rim = pow(1.0-ndv, 2.6);
+            /* soft studio reflections, as on a real glass ball */
+            float capL = pow(max(dot(vN, normalize(vec3(-0.55,0.62,0.55))),0.0), 9.0);
+            float capR = pow(max(dot(vN, normalize(vec3(0.62,0.5,0.6))),0.0), 14.0);
+            float low  = pow(max(dot(vN, normalize(vec3(0.1,-0.8,0.58))),0.0), 22.0);
+            float spec = pow(max(dot(vN, normalize(vec3(-0.45,0.7,0.55))),0.0), 90.0);
+            vec3 col = uC*rim*1.25 + vec3(0.86,0.92,1.0)*(capL*0.42 + capR*0.3 + low*0.22 + spec*0.9 + pow(rim,5.0)*0.7);
+            float a = rim*0.72 + capL*0.2 + capR*0.14 + low*0.12 + spec*0.8 + 0.035;
             gl_FragColor = vec4(col, a);
           }`
         }
@@ -99,34 +84,155 @@ function Core({ quality, tint }: { quality: CoreQuality; tint: THREE.Color }) {
   );
 }
 
-function Lattice() {
+/* Geodesic wireframe on the glass */
+function Geodesic({ color, detail }: { color: THREE.Color; detail: number }) {
   const ref = useRef<THREE.LineSegments>(null);
-  const geo = useMemo(() => new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.62, 2)), []);
+  const geo = useMemo(() => new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.305, detail)), [detail]);
   useFrame((_, dt) => {
     if (ref.current) {
-      ref.current.rotation.y += dt * 0.06;
-      ref.current.rotation.x += dt * 0.02;
+      ref.current.rotation.y += dt * 0.07;
+      ref.current.rotation.x += dt * 0.018;
     }
   });
   return (
-    <lineSegments ref={ref} geometry={geo}>
-      <lineBasicMaterial color="#9fd9ff" transparent opacity={0.13} depthWrite={false} />
+    <lineSegments ref={ref} geometry={geo} renderOrder={7}>
+      <lineBasicMaterial color={color} transparent opacity={0.14} depthWrite={false} blending={THREE.AdditiveBlending} />
     </lineSegments>
   );
 }
 
-function Glow({ color, size = 7.5, strength = 0.55, z = -0.6 }: { color: THREE.Color; size?: number; strength?: number; z?: number }) {
+/* ---------- Energy ribbon: many closed loops that together read as a woven band ---------- */
+function Ribbon({ a, b, loops }: { a: THREE.Color; b: THREE.Color; loops: number }) {
+  const { camera } = useThree();
+  const group = useRef<THREE.Group>(null);
+  const objects = useMemo(() => {
+    const n = 300;
+    const ang = new Float32Array(n + 1);
+    for (let i = 0; i <= n; i++) ang[i] = (i / n) * Math.PI * 2;
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array((n + 1) * 3), 3));
+    geo.setAttribute('aAngle', new THREE.BufferAttribute(ang, 1));
+    return Array.from({ length: loops }, (_, i) => {
+      const mat = new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        depthTest: false,
+        blending: THREE.AdditiveBlending,
+        uniforms: { uTime: { value: 0 }, uK: { value: i / Math.max(1, loops - 1) }, uA: { value: a }, uB: { value: b } },
+        vertexShader: /* glsl */ `
+          attribute float aAngle; uniform float uTime; uniform float uK; varying float vMix; varying float vEdge;
+          void main(){
+            float t = uTime;
+            float k = uK;
+            float r = 0.78
+              + 0.15*sin(aAngle*3.0 + t*0.8 + k*0.7)
+              + 0.085*sin(aAngle*5.0 - t*1.25 + k*1.3)
+              + 0.04*sin(aAngle*8.0 + t*1.9);
+            r *= 1.0 - k*0.2;
+            float z = sin(aAngle*2.0 + t*0.6)*0.32*(k-0.5) + cos(aAngle*3.0 - t*0.4)*0.1;
+            vMix = 0.5 + 0.5*sin(aAngle + t*0.5 + k*2.0);
+            vEdge = 1.0 - abs(k-0.5)*1.4;
+            gl_Position = projectionMatrix*modelViewMatrix*vec4(cos(aAngle)*r, sin(aAngle)*r*0.94, z, 1.0);
+          }`,
+        fragmentShader: `uniform vec3 uA; uniform vec3 uB; varying float vMix; varying float vEdge; void main(){ gl_FragColor=vec4(mix(uB,uA,vMix), 0.2 + (1.0-vEdge)*0.62); }`,
+      });
+      const loop = new THREE.LineLoop(geo, mat);
+      loop.frustumCulled = false;
+      loop.renderOrder = 4;
+      return loop;
+    });
+  }, [a, b, loops]);
+  useFrame((_, dt) => {
+    objects.forEach((o) => ((o.material as THREE.ShaderMaterial).uniforms.uTime.value += dt));
+    group.current?.quaternion.copy(camera.quaternion);
+  });
+  return (
+    <group ref={group}>
+      {objects.map((o, i) => (
+        <primitive key={i} object={o} />
+      ))}
+    </group>
+  );
+}
+
+/* ---------- Live waveform across the middle, with a light flare behind it ---------- */
+function Waveform({ color }: { color: THREE.Color }) {
+  const { camera } = useThree();
+  const group = useRef<THREE.Group>(null);
+  const flare = useRef<THREE.ShaderMaterial>(null);
+  const lines = useMemo(() => {
+    const n = 320;
+    const x = new Float32Array(n);
+    for (let i = 0; i < n; i++) x[i] = i / (n - 1);
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+    geo.setAttribute('aX', new THREE.BufferAttribute(x, 1));
+    return [0, 0.008, -0.008, 0.016, -0.016].map((off, i) => {
+      const m = new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        depthTest: false,
+        blending: THREE.AdditiveBlending,
+        uniforms: { uTime: { value: 0 }, uColor: { value: color }, uOff: { value: off }, uGain: { value: i === 0 ? 1 : 0.45 } },
+        vertexShader: /* glsl */ `
+          attribute float aX; uniform float uTime; uniform float uOff; varying float vA;
+          void main(){
+            float x = (aX-0.5)*2.0;
+            float env = pow(1.0-abs(x), 2.3);
+            float talk = 0.62 + 0.38*sin(uTime*1.7)*sin(uTime*0.63+1.2);
+            float y = (sin(aX*74.0+uTime*7.0)*0.5 + sin(aX*31.0-uTime*4.1)*0.32 + sin(aX*127.0+uTime*11.0)*0.18) * env * 0.56 * talk;
+            y += sin(aX*18.0 + uTime*2.0)*0.012;
+            vA = 0.35 + env*0.65;
+            gl_Position = projectionMatrix*modelViewMatrix*vec4(x*1.24, y + uOff, 0.0, 1.0);
+          }`,
+        fragmentShader: `uniform vec3 uColor; uniform float uGain; varying float vA; void main(){ gl_FragColor=vec4(uColor, vA*uGain); }`,
+      });
+      const l = new THREE.Line(geo, m);
+      l.frustumCulled = false;
+      l.renderOrder = 6;
+      return l;
+    });
+  }, [color]);
+  useFrame((_, dt) => {
+    lines.forEach((l) => ((l.material as THREE.ShaderMaterial).uniforms.uTime.value += dt));
+    if (flare.current) flare.current.uniforms.uTime.value += dt;
+    group.current?.quaternion.copy(camera.quaternion);
+  });
+  return (
+    <group ref={group}>
+      <mesh renderOrder={5}>
+        <planeGeometry args={[3.0, 1.1]} />
+        <shaderMaterial
+          ref={flare}
+          transparent
+          depthWrite={false}
+          depthTest={false}
+          blending={THREE.AdditiveBlending}
+          uniforms={{ uC: { value: color }, uTime: { value: 0 } }}
+          vertexShader={`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`}
+          fragmentShader={`uniform vec3 uC; uniform float uTime; varying vec2 vUv; void main(){ vec2 p=vUv-0.5; float core=exp(-p.y*p.y*900.0)*exp(-p.x*p.x*9.0); float halo=exp(-p.y*p.y*70.0)*exp(-p.x*p.x*14.0); float a=(core*0.55+halo*0.2)*(0.8+0.2*sin(uTime*2.3)); gl_FragColor=vec4(uC,a); }`}
+        />
+      </mesh>
+      {lines.map((l, i) => (
+        <primitive key={i} object={l} />
+      ))}
+    </group>
+  );
+}
+
+/* Soft additive light, always facing the camera */
+function Glow({ color, size, strength, z }: { color: THREE.Color; size: number; strength: number; z: number }) {
   const { camera } = useThree();
   const ref = useRef<THREE.Mesh>(null);
   useFrame(() => ref.current?.quaternion.copy(camera.quaternion));
   return (
-    <mesh ref={ref} position={[0, 0, z]} renderOrder={z < 0 ? -1 : 4}>
+    <mesh ref={ref} position={[0, 0, z]} renderOrder={z < 0 ? -1 : 3}>
       <planeGeometry args={[size, size]} />
       <shaderMaterial
         transparent
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
         depthTest={z < 0}
+        blending={THREE.AdditiveBlending}
         uniforms={{ uC: { value: color }, uS: { value: strength } }}
         vertexShader={`varying vec2 vUv; void main(){vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`}
         fragmentShader={`uniform vec3 uC; uniform float uS; varying vec2 vUv; void main(){ float d=distance(vUv,vec2(0.5)); float a=smoothstep(0.5,0.0,d); gl_FragColor=vec4(uC, a*a*a*uS); }`}
@@ -135,158 +241,72 @@ function Glow({ color, size = 7.5, strength = 0.55, z = -0.6 }: { color: THREE.C
   );
 }
 
-
-/* The live waveform inside the core. Always faces the camera. */
-function Waveform({ color }: { color: THREE.Color }) {
-  const { camera } = useThree();
-  const group = useRef<THREE.Group>(null);
-  const mat = useRef<THREE.ShaderMaterial>(null);
-  const geo = useMemo(() => {
-    const n = 220;
-    const x = new Float32Array(n);
-    for (let i = 0; i < n; i++) x[i] = i / (n - 1);
-    const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
-    g.setAttribute('aX', new THREE.BufferAttribute(x, 1));
-    return g;
-  }, []);
-  const line = useMemo(() => {
-    const m = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      depthTest: false,
-      blending: THREE.AdditiveBlending,
-      uniforms: { uTime: { value: 0 }, uColor: { value: color } },
-      vertexShader: /* glsl */ `
-        attribute float aX; uniform float uTime; varying float vA;
-        void main(){
-          float x = (aX-0.5)*2.0;
-          float env = pow(1.0-abs(x), 1.6);
-          float y = (sin(aX*46.0+uTime*6.0)*0.55 + sin(aX*19.0-uTime*3.4)*0.45) * env * (0.24 + 0.1*sin(uTime*1.3));
-          vA = env;
-          gl_Position = projectionMatrix*modelViewMatrix*vec4(x*1.0, y, 0.0, 1.0);
-        }`,
-      fragmentShader: `uniform vec3 uColor; varying float vA; void main(){ gl_FragColor=vec4(uColor, 0.25+vA*0.75); }`,
-    });
-    const l = new THREE.Line(geo, m);
-    l.frustumCulled = false;
-    l.renderOrder = 5;
-    return l;
-  }, [geo, color]);
+/* Thin orbit ring that catches the light as it turns */
+function OrbitRing({ radius, tube, tilt, speed, color }: { radius: number; tube: number; tilt: [number, number, number]; speed: number; color: THREE.Color }) {
+  const ref = useRef<THREE.Mesh>(null);
   useFrame((_, dt) => {
-    (line.material as THREE.ShaderMaterial).uniforms.uTime.value += dt;
-    group.current?.quaternion.copy(camera.quaternion);
+    if (ref.current) ref.current.rotation.z += dt * speed;
   });
-  void mat;
   return (
-    <group ref={group}>
-      <primitive object={line} />
+    <group rotation={tilt}>
+      <mesh ref={ref}>
+        <torusGeometry args={[radius, tube, 10, 200]} />
+        <shaderMaterial
+          transparent
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          uniforms={{ uC: { value: color } }}
+          vertexShader={`varying vec3 vN; varying vec3 vV; varying vec2 vUv; void main(){ vUv=uv; vec4 mv=modelViewMatrix*vec4(position,1.0); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`}
+          fragmentShader={`uniform vec3 uC; varying vec3 vN; varying vec3 vV; varying vec2 vUv; void main(){ float f=pow(1.0-abs(dot(vN,vV)),1.4); float sweep=pow(max(0.0,sin(vUv.x*6.2831)),10.0); gl_FragColor=vec4(uC*(0.55+f*0.8)+vec3(1.0)*sweep*0.9, 0.42+f*0.4+sweep*0.5); }`}
+        />
+      </mesh>
     </group>
   );
 }
 
-/* A ring whose radius carries a travelling waveform */
-function SoundRing({
-  radius,
-  tilt,
-  color,
-  speed,
-  amp,
-  freq,
-}: {
-  radius: number;
-  tilt: [number, number, number];
-  color: THREE.Color;
-  speed: number;
-  amp: number;
-  freq: number;
-}) {
-  const mat = useRef<THREE.ShaderMaterial>(null);
-  const geo = useMemo(() => {
-    const n = 360;
-    const a = new Float32Array(n + 1);
-    const pos = new Float32Array((n + 1) * 3);
-    for (let i = 0; i <= n; i++) a[i] = (i / n) * Math.PI * 2;
-    const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    g.setAttribute('aAngle', new THREE.BufferAttribute(a, 1));
-    return g;
-  }, []);
-  const uniforms = useMemo(
-    () => ({
-      uTime: { value: 0 },
-      uR: { value: radius },
-      uAmp: { value: amp },
-      uFreq: { value: freq },
-      uColor: { value: color },
-    }),
-    [radius, amp, freq, color],
-  );
-  useFrame((_, dt) => {
-    if (mat.current) mat.current.uniforms.uTime.value += dt * speed;
+/* Expanding rings: each one is a spoken word leaving the core */
+function Pulses({ color, n }: { color: THREE.Color; n: number }) {
+  const group = useRef<THREE.Group>(null);
+  const { camera } = useThree();
+  useFrame(({ clock }) => {
+    const g = group.current;
+    if (!g) return;
+    g.quaternion.copy(camera.quaternion);
+    g.children.forEach((c, i) => {
+      const u = (clock.elapsedTime * 0.2 + i / n) % 1;
+      const mesh = c as THREE.Mesh;
+      mesh.scale.setScalar(1.35 + u * 2.4);
+      (mesh.material as THREE.MeshBasicMaterial).opacity = (1 - u) * (1 - u) * 0.32;
+    });
   });
   return (
-    <group rotation={tilt}>
-      <lineLoop geometry={geo} frustumCulled={false}>
-        <shaderMaterial
-          ref={mat}
-          uniforms={uniforms}
-          transparent
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-          vertexShader={
-            /* glsl */ `
-            attribute float aAngle; uniform float uTime; uniform float uR; uniform float uAmp; uniform float uFreq; varying float vE;
-            void main(){
-              float env = pow(max(0.0, cos(aAngle*0.5 - uTime*0.35)), 6.0);
-              float w = sin(aAngle*uFreq + uTime*3.0)*sin(aAngle*uFreq*0.37 - uTime*1.7);
-              float r = uR + w*uAmp*env;
-              vE = env;
-              vec3 p = vec3(cos(aAngle)*r, sin(aAngle)*r, w*uAmp*env*0.6);
-              gl_Position = projectionMatrix*modelViewMatrix*vec4(p,1.0);
-            }`
-          }
-          fragmentShader={`uniform vec3 uColor; varying float vE; void main(){ gl_FragColor=vec4(uColor, 0.38 + vE*0.62); }`}
-        />
-      </lineLoop>
+    <group ref={group}>
+      {Array.from({ length: n }, (_, i) => (
+        <mesh key={i}>
+          <ringGeometry args={[0.99, 1, 96]} />
+          <meshBasicMaterial color={color} transparent opacity={0} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
+        </mesh>
+      ))}
     </group>
   );
 }
 
 /* Particles flowing along a curve */
-function SignalPath({
-  points,
-  color,
-  count,
-  speed,
-  loop,
-}: {
-  points: [number, number, number][];
-  color: THREE.Color;
-  count: number;
-  speed: number;
-  loop?: boolean;
-}) {
+function SignalPath({ points, color, count, speed }: { points: [number, number, number][]; color: THREE.Color; count: number; speed: number }) {
   const SAMPLES = 320;
   const { table, lineObj } = useMemo(() => {
     const curve = new THREE.CatmullRomCurve3(
       points.map((p) => new THREE.Vector3(...p)),
-      !!loop,
+      false,
       'catmullrom',
       0.5,
     );
     const pts = curve.getSpacedPoints(SAMPLES);
     const t = new Float32Array((SAMPLES + 1) * 3);
     pts.forEach((p, i) => p.toArray(t, i * 3));
-    const mat = new THREE.LineBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.5,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    });
+    const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.42, depthWrite: false, blending: THREE.AdditiveBlending });
     return { table: t, lineObj: new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat) };
-  }, [points, loop, color]);
+  }, [points, color]);
 
   const geo = useMemo(() => {
     const g = new THREE.BufferGeometry();
@@ -336,11 +356,7 @@ function SignalPath({
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           uniforms={{ uColor: { value: color } }}
-          vertexShader={
-            /* glsl */ `
-            attribute float aSeed; varying float vS;
-            void main(){ vS=aSeed; vec4 mv=modelViewMatrix*vec4(position,1.0); gl_PointSize=(18.0+aSeed*34.0)/-mv.z; gl_Position=projectionMatrix*mv; }`
-          }
+          vertexShader={`attribute float aSeed; varying float vS; void main(){ vS=aSeed; vec4 mv=modelViewMatrix*vec4(position,1.0); gl_PointSize=(18.0+aSeed*34.0)/-mv.z; gl_Position=projectionMatrix*mv; }`}
           fragmentShader={`uniform vec3 uColor; varying float vS; void main(){ float d=length(gl_PointCoord-0.5); float a=smoothstep(0.5,0.0,d); gl_FragColor=vec4(uColor, a*(0.35+vS*0.65)); }`}
         />
       </points>
@@ -348,151 +364,66 @@ function SignalPath({
   );
 }
 
-
-/* A ring of bars around the core that behaves like a live audio spectrum */
-function Equalizer({ count, radius, color }: { count: number; radius: number; color: THREE.Color }) {
-  const ref = useRef<THREE.InstancedMesh>(null);
-  const dummy = useMemo(() => new THREE.Object3D(), []);
-  useFrame(({ clock }) => {
-    const m = ref.current;
-    if (!m) return;
-    const t = clock.elapsedTime;
-    for (let i = 0; i < count; i++) {
-      const a = (i / count) * Math.PI * 2;
-      const v = 0.5 + 0.5 * Math.sin(a * 5 + t * 2.6) * Math.sin(a * 2 - t * 1.3) + 0.25 * Math.sin(a * 13 + t * 5.2);
-      const h = 0.06 + Math.max(0, v) * 0.42;
-      dummy.position.set(Math.cos(a) * radius, 0, Math.sin(a) * radius);
-      dummy.rotation.set(0, -a, 0);
-      dummy.scale.set(1, h, 1);
-      dummy.updateMatrix();
-      m.setMatrixAt(i, dummy.matrix);
-    }
-    m.instanceMatrix.needsUpdate = true;
-    m.rotation.y = t * 0.08;
-  });
-  return (
-    <group rotation={[0.42, 0, 0.12]}>
-      <instancedMesh ref={ref} args={[undefined, undefined, count]} frustumCulled={false}>
-        <boxGeometry args={[0.022, 1, 0.022]} />
-        <meshBasicMaterial color={color} transparent opacity={0.75} blending={THREE.AdditiveBlending} depthWrite={false} />
-      </instancedMesh>
-    </group>
-  );
-}
-
-/* Expanding rings: each one is a spoken word leaving the core */
-function Pulses({ color, n = 3 }: { color: THREE.Color; n?: number }) {
-  const group = useRef<THREE.Group>(null);
-  const { camera } = useThree();
-  useFrame(({ clock }) => {
-    const g = group.current;
-    if (!g) return;
-    g.quaternion.copy(camera.quaternion);
-    g.children.forEach((c, i) => {
-      const u = (clock.elapsedTime * 0.22 + i / n) % 1;
-      const mesh = c as THREE.Mesh;
-      mesh.scale.setScalar(1.3 + u * 2.6);
-      (mesh.material as THREE.MeshBasicMaterial).opacity = (1 - u) * (1 - u) * 0.5;
-    });
-  });
-  return (
-    <group ref={group}>
-      {Array.from({ length: n }, (_, i) => (
-        <mesh key={i}>
-          <ringGeometry args={[0.985, 1, 96]} />
-          <meshBasicMaterial color={color} transparent opacity={0} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-/* Solid glass orbit rings that catch the light as they turn */
-function GlassRing({ radius, tube, tilt, speed, color }: { radius: number; tube: number; tilt: [number, number, number]; speed: number; color: THREE.Color }) {
-  const ref = useRef<THREE.Mesh>(null);
-  useFrame((_, dt) => {
-    if (ref.current) ref.current.rotation.z += dt * speed;
-  });
-  return (
-    <group rotation={tilt}>
-      <mesh ref={ref}>
-        <torusGeometry args={[radius, tube, 12, 160]} />
-        <shaderMaterial
-          transparent
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-          uniforms={{ uC: { value: color } }}
-          vertexShader={`varying vec3 vN; varying vec3 vV; varying vec2 vUv; void main(){ vUv=uv; vec4 mv=modelViewMatrix*vec4(position,1.0); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`}
-          fragmentShader={`uniform vec3 uC; varying vec3 vN; varying vec3 vV; varying vec2 vUv; void main(){ float f=pow(1.0-abs(dot(vN,vV)),1.6); float sweep=pow(max(0.0,sin(vUv.x*6.2831)),8.0); gl_FragColor=vec4(uC*(0.35+f*0.9)+vec3(1.0)*sweep*0.8, 0.25+f*0.5+sweep*0.5); }`}
-        />
-      </mesh>
-    </group>
-  );
-}
-
-function ContextNodes({ count }: { count: number }) {
-  const group = useRef<THREE.Group>(null);
-  const nodes = useMemo(
-    () =>
-      Array.from({ length: count }, (_, i) => ({
-        r: 2.05 + (i % 3) * 0.32,
-        phase: (i / count) * Math.PI * 2,
-        tilt: -0.5 + (i % 4) * 0.34,
-        speed: 0.12 + (i % 3) * 0.05,
-        size: 0.035 + (i % 2) * 0.02,
-      })),
-    [count],
-  );
-  useFrame(({ clock }) => {
-    const t = clock.elapsedTime;
-    group.current?.children.forEach((child, i) => {
-      const n = nodes[i];
-      const a = n.phase + t * n.speed;
-      child.position.set(Math.cos(a) * n.r, Math.sin(a) * n.r * Math.sin(n.tilt) * 0.9, Math.sin(a) * n.r * Math.cos(n.tilt));
-    });
-  });
-  return (
-    <group ref={group}>
-      {nodes.map((n, i) => (
-        <mesh key={i}>
-          <sphereGeometry args={[n.size, 12, 12]} />
-          <meshBasicMaterial color={i % 3 === 0 ? '#b9aeff' : '#ddf8ff'} transparent opacity={0.9} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-function Dust({ count }: { count: number }) {
+/* Bokeh: soft out-of-focus discs at different depths that drift upward and twinkle */
+function Bokeh({ count, a, b }: { count: number; a: THREE.Color; b: THREE.Color }) {
   const ref = useRef<THREE.Points>(null);
+  const mat = useRef<THREE.ShaderMaterial>(null);
   const geo = useMemo(() => {
     const g = new THREE.BufferGeometry();
     const p = new Float32Array(count * 3);
     const s = new Float32Array(count);
     for (let i = 0; i < count; i++) {
-      const r = 2.4 + Math.random() * 5.5;
-      const th = Math.random() * Math.PI * 2;
-      const ph = Math.acos(2 * Math.random() - 1);
-      p[i * 3] = r * Math.sin(ph) * Math.cos(th);
-      p[i * 3 + 1] = r * Math.sin(ph) * Math.sin(th) * 0.7;
-      p[i * 3 + 2] = r * Math.cos(ph) - 1.5;
+      p[i * 3] = (Math.random() - 0.5) * 22;
+      p[i * 3 + 1] = (Math.random() - 0.5) * 12;
+      p[i * 3 + 2] = -7 + Math.random() * 11;
       s[i] = Math.random();
     }
     g.setAttribute('position', new THREE.BufferAttribute(p, 3));
     g.setAttribute('aSeed', new THREE.BufferAttribute(s, 1));
     return g;
   }, [count]);
-  useFrame((_, dt) => {
-    if (ref.current) ref.current.rotation.y += dt * 0.012;
+  const uniforms = useMemo(() => ({ uTime: { value: 0 }, uA: { value: a }, uB: { value: b } }), [a, b]);
+  useFrame((state, dt) => {
+    if (mat.current) mat.current.uniforms.uTime.value += dt;
+    if (ref.current) {
+      ref.current.rotation.y = state.pointer.x * 0.04;
+      ref.current.rotation.x = -state.pointer.y * 0.03;
+    }
   });
   return (
-    <points ref={ref} geometry={geo}>
+    <points ref={ref} geometry={geo} frustumCulled={false}>
       <shaderMaterial
+        ref={mat}
+        uniforms={uniforms}
         transparent
         depthWrite={false}
         blending={THREE.AdditiveBlending}
-        vertexShader={`attribute float aSeed; varying float vS; void main(){ vS=aSeed; vec4 mv=modelViewMatrix*vec4(position,1.0); gl_PointSize=(6.0+aSeed*26.0)/-mv.z; gl_Position=projectionMatrix*mv; }`}
-        fragmentShader={`varying float vS; void main(){ float d=length(gl_PointCoord-0.5); float a=smoothstep(0.5,0.0,d); vec3 c=mix(vec3(0.22,0.85,0.95), vec3(0.72,0.68,1.0), vS); gl_FragColor=vec4(c, a*(0.12+vS*0.4)); }`}
+        vertexShader={
+          /* glsl */ `
+          attribute float aSeed; uniform float uTime; varying float vS; varying float vBlur;
+          void main(){
+            vS = aSeed;
+            vec3 p = position;
+            p.y = mod(p.y + uTime*(0.08+aSeed*0.16) + 6.0, 12.0) - 6.0;
+            p.x += sin(uTime*0.25 + aSeed*30.0)*0.35;
+            vec4 mv = modelViewMatrix*vec4(p,1.0);
+            /* particles far from the focal plane get larger and softer */
+            vBlur = clamp(abs(-mv.z - 8.2)/6.0, 0.0, 1.0);
+            gl_PointSize = (10.0 + aSeed*22.0 + vBlur*90.0)/-mv.z;
+            gl_Position = projectionMatrix*mv;
+          }`
+        }
+        fragmentShader={
+          /* glsl */ `
+          uniform vec3 uA; uniform vec3 uB; uniform float uTime; varying float vS; varying float vBlur;
+          void main(){
+            float d = length(gl_PointCoord-0.5);
+            float disc = smoothstep(0.5, 0.5 - mix(0.42, 0.1, vBlur), d);
+            float tw = 0.65 + 0.35*sin(uTime*(0.8+vS*2.0) + vS*40.0);
+            vec3 c = mix(uB, uA, vS);
+            gl_FragColor = vec4(c, disc * tw * mix(0.5, 0.11, vBlur));
+          }`
+        }
       />
     </points>
   );
@@ -531,42 +462,39 @@ function Rig({
   const target = useRef({ x: 0, y: 0 });
   const { viewport } = useThree();
   const hi = quality === 'high';
-  const tint = variant === 'b' ? LAVENDER : CYAN;
+  const pal = PALETTES[variant];
 
   useFrame((state, dt) => {
     const g = group.current;
     if (!g) return;
     const k = 1 - Math.exp(-dt * 3);
-    target.current.x += (state.pointer.x * 0.28 - target.current.x) * k;
-    target.current.y += (-state.pointer.y * 0.18 - target.current.y) * k;
+    target.current.x += (state.pointer.x * 0.3 - target.current.x) * k;
+    target.current.y += (-state.pointer.y * 0.2 - target.current.y) * k;
     const s = scrollRef?.current ?? 0;
     g.rotation.y = target.current.x + s * 0.9 + Math.sin(state.clock.elapsedTime * 0.15) * 0.08;
     g.rotation.x = target.current.y + s * 0.25;
     g.position.x = offset[0] * viewport.width * 0.5;
     g.position.y = offset[1] * viewport.height * 0.5 + s * 1.4;
-    const base = Math.min(viewport.width / 4.6, viewport.height / 7.0, 1);
-    g.scale.setScalar(base * (1 - s * 0.25) * (1 + Math.sin(state.clock.elapsedTime * 0.9) * 0.015));
+    const base = Math.min(viewport.width / 4.6, viewport.height / 6.4, 1.08);
+    g.scale.setScalar(base * (1 - s * 0.25) * (1 + Math.sin(state.clock.elapsedTime * 0.9) * 0.012));
   });
 
   return (
     <>
-      <Dust count={hi ? 420 : 140} />
+      <Bokeh count={hi ? 340 : 110} a={pal.ribbonA} b={pal.ring} />
       <group ref={group}>
-        <Glow color={tint} />
-        <Core quality={quality} tint={tint} />
-        <Glow color={ICE} size={1.5} strength={1.0} z={0} />
-        <Waveform color={ICE} />
-        <Lattice />
-        <SoundRing radius={1.95} tilt={[1.25, 0.2, 0]} color={CYAN} speed={1} amp={0.16} freq={22} />
-        <SoundRing radius={2.3} tilt={[1.05, -0.45, 0.3]} color={BLUE} speed={0.7} amp={0.12} freq={16} />
-        {hi && <SoundRing radius={2.7} tilt={[1.4, 0.6, -0.2]} color={VIOLET} speed={0.5} amp={0.1} freq={12} />}
+        <Glow color={pal.glow} size={8.5} strength={0.42} z={-0.8} />
+        <Glow color={pal.glow} size={2.6} strength={0.26} z={0} />
+        <Ribbon a={pal.ribbonA} b={pal.ribbonB} loops={hi ? 22 : 10} />
+        <Waveform color={pal.wave} />
+        <Geodesic color={pal.glass} detail={hi ? 4 : 3} />
+        <GlassSphere color={pal.glass} segments={hi ? 96 : 48} />
+        <OrbitRing radius={2.0} tube={0.011} tilt={[1.18, 0.52, 0]} speed={0.22} color={pal.ring} />
+        <OrbitRing radius={2.0} tube={0.011} tilt={[1.18, -0.6, 0.2]} speed={-0.18} color={pal.ring} />
+        {hi && <OrbitRing radius={2.32} tube={0.006} tilt={[0.12, 0.1, 0]} speed={0.08} color={pal.glass} />}
+        <Pulses color={pal.ring} n={hi ? 3 : 2} />
         {variant !== 'b' && <SignalPath points={PATH_A} color={CYAN} count={hi ? 110 : 50} speed={0.11} />}
         {variant !== 'a' && <SignalPath points={PATH_B} color={LAVENDER} count={hi ? 110 : 50} speed={0.09} />}
-        <Equalizer count={hi ? 96 : 48} radius={1.48} color={tint} />
-        <Pulses color={tint} n={hi ? 3 : 2} />
-        <GlassRing radius={2.05} tube={0.012} tilt={[1.1, 0.5, 0]} speed={0.25} color={ICE} />
-        {hi && <GlassRing radius={2.5} tube={0.008} tilt={[0.5, -0.9, 0.4]} speed={-0.18} color={LAVENDER} />}
-        <ContextNodes count={hi ? 9 : 5} />
       </group>
     </>
   );

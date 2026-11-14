@@ -76,3 +76,19 @@ Added at the owner's request for more motion and more 3D.
 - Small living details: call states light up in sequence, active step dots pulse, orbs bob, role photos drift slowly, primary buttons get a light sweep on hover.
 
 **Cost:** the home page now creates up to four WebGL canvases (hero core, two fields, closing core). Only the ones on screen render. This has not been profiled on a low-power device.
+
+## Orb film look (2026-11-14, later)
+
+The owner supplied `gemini_generated_video_e93e1c08.mp4` (the orb film from the original hero) and asked for that effect in the hero and wherever it fits. The core was rebuilt in WebGL to match it rather than embedding the video file, because a live scene stays sharp at any size, reacts to the pointer and scroll, weighs nothing extra, and carries no generator watermark.
+
+What the core is now (`CoreScene.tsx`, rewritten):
+- **Glass sphere** with soft studio reflections and a **geodesic wireframe**.
+- **Energy ribbon:** 22 closed loops that together read as the wavy woven band inside the sphere.
+- **Waveform** across the middle with a light flare behind it; its amplitude rises and falls like speech.
+- **Orbit rings:** two crossing thin rings and one faint outer ring.
+- **Bokeh:** soft out-of-focus particles at different depths that drift upward and twinkle.
+- Kept from before: pulse rings and the two mode signal paths. Removed: the equalizer bar ring and the noise-displaced shell.
+
+Colour follows the film on the pages that show both modes (violet and blue). Mode A keeps a cyan core and Mode B a lavender one, so the mode colour rule still holds. The hero background, the headline accent line, the closing section, the static fallback and the small orbs inside the product demos were retinted to match.
+
+Where it appears: home hero, home closing section, Product, Mode A, Mode B, every interior closing section, and the 404 page. The video file itself is not used anywhere on the site.

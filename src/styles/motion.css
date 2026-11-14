@@ -415,3 +415,94 @@
 .action .mock {
   flex: 1;
 }
+
+/* ---------- Orb film look: glass sphere, violet energy, waveform ---------- */
+.hero {
+  background:
+    radial-gradient(ellipse 55% 60% at 72% 46%, rgba(109, 92, 255, 0.26), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 15% 100%, rgba(53, 107, 255, 0.14), transparent 70%), #07081a;
+}
+.final {
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(109, 92, 255, 0.24), transparent 70%), var(--midnight);
+}
+.hero__line--accent .hero__word {
+  background-image: linear-gradient(90deg, #ddf8ff 0%, #b9aeff 60%, #8f9bff 100%);
+}
+.hero__line--accent .hero__word:nth-child(2) {
+  background-image: linear-gradient(90deg, #c9c2ff 0%, #a59bff 50%, #7f8dff 100%);
+}
+.hero__line--accent .hero__word:nth-child(3) {
+  background-image: linear-gradient(90deg, #a59bff 0%, #5f86ff 100%);
+}
+
+/* Static fallback matches the glass orb */
+.core-fallback {
+  --tint: #7c6bff;
+}
+.core-fallback--a {
+  --tint: var(--cyan);
+}
+.core-fallback--b {
+  --tint: var(--lavender);
+}
+.core-fallback__orb {
+  width: 34%;
+  height: 34%;
+  background:
+    linear-gradient(90deg, transparent 6%, color-mix(in srgb, var(--tint) 30%, #fff) 30%, #fff 50%, color-mix(in srgb, var(--tint) 30%, #fff) 70%, transparent 94%) center / 100% 2px no-repeat,
+    radial-gradient(ellipse 34% 20% at 32% 22%, rgba(255, 255, 255, 0.4), transparent 70%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--tint) 55%, transparent) 0%, transparent 58%),
+    radial-gradient(circle at 50% 50%, transparent 62%, color-mix(in srgb, var(--tint) 45%, #dfe9ff) 100%);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--tint) 50%, #dfe9ff),
+    0 0 90px color-mix(in srgb, var(--tint) 50%, transparent);
+}
+.core-fallback__ring--2,
+.core-fallback__ring--3 {
+  border-color: color-mix(in srgb, var(--tint) 45%, transparent);
+}
+
+/* Small orbs inside the product demos use the same glass look */
+.mock__orb,
+.agent__orb {
+  background:
+    radial-gradient(ellipse 36% 22% at 32% 22%, rgba(255, 255, 255, 0.38), transparent 70%),
+    radial-gradient(circle at 50% 50%, rgba(124, 107, 255, 0.55) 0%, rgba(53, 107, 255, 0.12) 52%, transparent 64%),
+    radial-gradient(circle at 50% 50%, rgba(8, 11, 24, 0.2) 60%, rgba(169, 200, 255, 0.55) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(169, 200, 255, 0.5),
+    0 0 60px rgba(109, 92, 255, 0.45);
+}
+.mock__orb::before,
+.agent__orb::before {
+  content: '';
+  position: absolute;
+  inset: -22px -34px;
+  border-radius: 50%;
+  border: 1px solid rgba(154, 168, 255, 0.5);
+  transform: rotate(-24deg) scaleY(0.42);
+  animation: orbit-spin 9s linear infinite;
+}
+.mock__orb::after,
+.agent__orb::after {
+  content: '';
+  position: absolute;
+  inset: -22px -34px;
+  border-radius: 50%;
+  border: 1px solid rgba(154, 168, 255, 0.35);
+  transform: rotate(28deg) scaleY(0.42);
+}
+@keyframes orbit-spin {
+  to {
+    transform: rotate(336deg) scaleY(0.42);
+  }
+}
+.mock__orb .bars i,
+.agent__orb .bars i {
+  background: linear-gradient(180deg, #f1dcff, #9a7bff);
+  box-shadow: 0 0 10px rgba(227, 180, 255, 0.8);
+}
+.mock__orb > span,
+.agent__orb > span {
+  border-color: rgba(154, 168, 255, 0.45);
+}
