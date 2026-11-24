@@ -1,7 +1,7 @@
 
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "lilyai",
+  "name": "site",
   "compatibility_date": "2026-11-24",
   "assets": {
     "directory": "./dist/",
